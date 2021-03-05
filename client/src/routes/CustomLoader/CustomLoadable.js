@@ -1,5 +1,5 @@
 import Loadable from "react-loadable";
-import Skeletoner from "./Skeletoner";
+import Skeletoner from "./Spinner";
 
 function CustomLoadable(opts) {
   return Loadable(
