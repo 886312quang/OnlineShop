@@ -1,0 +1,12 @@
+.Header {
+  position: fixed;
+  height: 100px;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  background: rgba(204, 204, 204, 0);
+  transition: 0.4s ease-in-out;
+}
