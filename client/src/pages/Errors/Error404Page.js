@@ -5,6 +5,10 @@ import Button from "@material-ui/core/Button";
 import { BACK_HOME, ERROR_404 } from "../../constants/ErrorPage";
 
 const Error404Page = () => {
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <ErrorWrapper>
       <div className="exception">
@@ -21,7 +25,11 @@ const Error404Page = () => {
           <div className="desc">{ERROR_404}</div>
           <div className="actions">
             <Link to="/">
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClick()}
+              >
                 {BACK_HOME}
               </Button>
             </Link>
