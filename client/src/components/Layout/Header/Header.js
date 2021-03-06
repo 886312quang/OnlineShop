@@ -169,79 +169,77 @@ const Header = (props) => {
         }
       }
       setNavBar(virtualNavBar);
-
+    });
+    if (
+      location === "/news" ||
+      location === `/news/category/${props.match.params.cate}` ||
+      location === "/collection" ||
+      location === `/collection/${path}`
+    ) {
+      setWhiteText(true);
+      setDisableBox(true);
+    } else {
+      setWhiteText(false);
+      setDisableBox(false);
+    }
+    function onScroll() {
       if (
         location === "/news" ||
         location === `/news/category/${props.match.params.cate}` ||
         location === "/collection" ||
         location === `/collection/${path}`
       ) {
-        setWhiteText(true);
-        setDisableBox(true);
-      } else {
-        setWhiteText(false);
-        setDisableBox(false);
-      }
-
-      function onScroll() {
-        if (
-          location === "/news" ||
-          location === `/news/category/${props.match.params.cate}` ||
-          location === "/collection" ||
-          location === `/collection/${path}`
-        ) {
-          if (window.pageYOffset < 50) {
-            // top
-            if (dropdownHover === true) {
-              setWhiteBox(true);
-              setWhiteText(false);
-              setDisableBox(false);
-            } else {
-              setWhiteBox(false);
-              setWhiteText(true);
-              setDisableBox(true);
-            }
-          } else if (this.prev < window.pageYOffset) {
-            //down
-            if (dropdownHover === true) {
-              setScrolled(false);
-            } else {
-              setScrolled(true);
-            }
+        if (window.pageYOffset < 50) {
+          // top
+          if (dropdownHover === true) {
             setWhiteBox(true);
+            setWhiteText(false);
             setDisableBox(false);
-            setWhiteText(false);
-          } else if (this.prev > window.pageYOffset) {
-            //up
-            setScrolled(false);
-          }
-        } else {
-          if (window.pageYOffset < 50) {
-            // top
+          } else {
             setWhiteBox(false);
-            setWhiteText(false);
-          } else if (this.prev < window.pageYOffset) {
-            //down
-            if (dropdownHover === true) {
-              setScrolled(false);
-            } else {
-              setScrolled(true);
-            }
-            setWhiteBox(true);
-          } else if (this.prev > window.pageYOffset) {
-            //up
-            setScrolled(false);
-            setWhiteText(false);
+            setWhiteText(true);
+            setDisableBox(true);
           }
+        } else if (this.prev < window.pageYOffset) {
+          //down
+          if (dropdownHover === true) {
+            setScrolled(false);
+          } else {
+            setScrolled(true);
+          }
+          setWhiteBox(true);
+          setDisableBox(false);
+          setWhiteText(false);
+        } else if (this.prev > window.pageYOffset) {
+          //up
+          setScrolled(false);
         }
-        this.prev = window.pageYOffset;
+      } else {
+        if (window.pageYOffset < 50) {
+          // top
+          setWhiteBox(false);
+          setWhiteText(false);
+        } else if (this.prev < window.pageYOffset) {
+          //down
+          if (dropdownHover === true) {
+            setScrolled(false);
+          } else {
+            setScrolled(true);
+          }
+          setWhiteBox(true);
+        } else if (this.prev > window.pageYOffset) {
+          //up
+          setScrolled(false);
+          setWhiteText(false);
+        }
       }
+      this.prev = window.pageYOffset;
+    }
 
-      window.addEventListener("scroll", onScroll);
-      return () => {
-        window.removeEventListener("scroll", onScroll);
-      };
-    });
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [location, dropdownHover, props.match.params.cate, path]);
 
   if (searchOpen || accountOpen || cartOpen) {
@@ -273,7 +271,7 @@ const Header = (props) => {
     if (window.innerWidth > 820) closeMobileMenuFunc();
   };
 
-  useEffect(() => {
+   useEffect(() => {
     toggleMenuOnResize();
     window.addEventListener("resize", toggleMenuOnResize);
     return () => {

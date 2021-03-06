@@ -7,6 +7,10 @@ import { ERROR_401 } from "../../constants/ErrorPage";
 const LOGIN = "Đăng nhập";
 
 const Error403Page = () => {
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <ErrorWrapper>
       <div className="exception">
@@ -23,7 +27,11 @@ const Error403Page = () => {
           <div className="desc">{ERROR_401}</div>
           <div className="actions">
             <Link to="/signin">
-              <Button variant="contained" color="secondary">
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleClick()}
+              >
                 {LOGIN}
               </Button>
             </Link>
