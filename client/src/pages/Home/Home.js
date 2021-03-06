@@ -4,6 +4,7 @@ import Banner from "../../components/Banner/Banner";
 import RecommendBanner from "../../components/Home/RecommendBanner";
 import Newsletter from "../../components/Layout/Newsletter/Newsletter";
 import FashionNews from "../../components/Home/FashionNews";
+import HomeTab from "../../components/Home/HomeTab";
 import Footer from "../../components/Layout/Footer/Footer";
 import axios from "axios";
 import "../../App.css";
@@ -22,6 +23,7 @@ const Home = () => {
       <Header />
       <Banner collection={collection} />
       <RecommendBanner />
+      <HomeTab />
       <FashionNews />
       <Newsletter />
       <Footer />
