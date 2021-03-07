@@ -14,6 +14,14 @@ const publicRoutes = [
     permissionRequired: null,
     icon: "home",
   },
+  {
+    path: "/products/:id",
+    loader: () => import("../pages/Products/index"),
+    menu: true,
+    label: "Product",
+    permissionRequired: null,
+    icon: "product",
+  },
 ];
 
 export default {

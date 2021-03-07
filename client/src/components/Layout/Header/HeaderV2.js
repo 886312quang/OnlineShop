@@ -1,27 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
-  faUser,
-  faCartPlus,
-  faBars,
-  faAngleDown,
+    faAngleDown, faBars, faCartPlus, faSearch,
+    faUser
 } from "@fortawesome/free-solid-svg-icons";
-import { UserContext } from "../../../contexts/User";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import classNames from "classnames";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Div100vh from "react-div-100vh";
+import { Link, withRouter } from "react-router-dom";
+import "../../../App.css";
 import MenuItemDropdown from "../../Menu/MenuItemDropdown";
 
-import "../../../App.css";
-
-const Header = (props) => {
-  //Context
-  const { userInfo } = useContext(UserContext);
-
-  //State
-  const [navBar, setNavBar] = useState([]);
+function HeaderV2(props) {
   const [scrolled, setScrolled] = useState(false);
   const [whiteBox, setWhiteBox] = useState(false);
   const [whiteText, setWhiteText] = useState(false);
@@ -32,23 +22,18 @@ const Header = (props) => {
   const [dropdownHover, setDropdownHover] = useState(false);
   const [totalCart, setTotalCart] = useState(0);
   const [openSubMenu, setOpenSubMenu] = useState(null);
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [closeAnimation, setCloseAnimation] = useState(false);
   const [searchMobile, setSearchMobile] = useState("");
 
-  //Ref
+  const location = props.history.location.pathname;
+
   const subHeight = useRef();
 
-  const location = props.history.location.pathname;
-  const path = props.history.location.pathname.slice(12);
-
-  const clickToClose = () => {
+  function clickToClose() {
     document.body.style.overflow = "unset";
     setSearchOpen(false);
     setAccountOpen(false);
     setCartOpen(false);
-    setOpenMobileMenu(false);
-  };
+  }
 
   const handleHover = () => {
     setDropdownHover(true);
@@ -59,6 +44,8 @@ const Header = (props) => {
   const handleClick = () => {
     window.scrollTo(0, 0);
   };
+
+  const [navBar, setNavBar] = useState([]);
 
   useEffect(() => {
     const navBar = [
@@ -94,7 +81,6 @@ const Header = (props) => {
       },
     ];
     setNavBar(navBar);
-
     axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
       let virtualNavBar = [...navBar];
       const menProduct = [];
@@ -110,12 +96,10 @@ const Header = (props) => {
       let groupCateMen = menProduct.filter(function (elem, index, self) {
         return index === self.indexOf(elem);
       });
-
       let groupCateWomen = womenProduct.filter(function (elem, index, self) {
         return index === self.indexOf(elem);
       });
-
-      let menDropdownContent = [];
+      const menDropdownContent = [];
       for (let i in groupCateMen) {
         let menData = {};
         let cateList = [];
@@ -137,8 +121,7 @@ const Header = (props) => {
         };
         menDropdownContent.push(menData);
       }
-
-      let womenDropdownContent = [];
+      const womenDropdownContent = [];
       for (let i in groupCateWomen) {
         let womenData = {};
         let cateList = [];
@@ -169,68 +152,28 @@ const Header = (props) => {
       }
       setNavBar(virtualNavBar);
     });
-    if (
-      location === "/news" ||
-      location === `/news/category/${props.match.params.cate}` ||
-      location === "/collection" ||
-      location === `/collection/${path}`
-    ) {
-      setWhiteText(true);
-      setDisableBox(true);
-    } else {
-      setWhiteText(false);
-      setDisableBox(false);
-    }
+    setWhiteText(false);
+    setDisableBox(false);
+    setScrolled(false);
+
+
     function onScroll() {
-      if (
-        location === "/news" ||
-        location === `/news/category/${props.match.params.cate}` ||
-        location === "/collection" ||
-        location === `/collection/${path}`
-      ) {
-        if (window.pageYOffset < 50) {
-          // top
-          if (dropdownHover === true) {
-            setWhiteBox(true);
-            setWhiteText(false);
-            setDisableBox(false);
-          } else {
-            setWhiteBox(false);
-            setWhiteText(true);
-            setDisableBox(true);
-          }
-        } else if (this.prev < window.pageYOffset) {
-          //down
-          if (dropdownHover === true) {
-            setScrolled(false);
-          } else {
-            setScrolled(true);
-          }
-          setWhiteBox(true);
-          setDisableBox(false);
-          setWhiteText(false);
-        } else if (this.prev > window.pageYOffset) {
-          //up
+      if (window.pageYOffset < 50) {
+        // top
+        setWhiteBox(false);
+        setWhiteText(false);
+      } else if (this.prev < window.pageYOffset) {
+        //down
+        if (dropdownHover === true) {
           setScrolled(false);
+        } else {
+          setScrolled(true);
         }
-      } else {
-        if (window.pageYOffset < 50) {
-          // top
-          setWhiteBox(false);
-          setWhiteText(false);
-        } else if (this.prev < window.pageYOffset) {
-          //down
-          if (dropdownHover === true) {
-            setScrolled(false);
-          } else {
-            setScrolled(true);
-          }
-          setWhiteBox(true);
-        } else if (this.prev > window.pageYOffset) {
-          //up
-          setScrolled(false);
-          setWhiteText(false);
-        }
+        setWhiteBox(true);
+      } else if (this.prev > window.pageYOffset) {
+        //up
+        setScrolled(false);
+        setWhiteText(false);
       }
       this.prev = window.pageYOffset;
     }
@@ -239,17 +182,24 @@ const Header = (props) => {
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, [location, dropdownHover, props.match.params.cate, path]);
+  }, [
+    location,
+    dropdownHover,
+    props.match.params.cate,
+  ]);
 
   if (searchOpen || accountOpen || cartOpen) {
     document.body.style.overflow = "hidden";
   }
+
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   const openMobileMenuFunc = () => {
     setOpenMobileMenu(true);
     document.body.style.overflow = "hidden";
   };
 
+  const [closeAnimation, setCloseAnimation] = useState(false);
   const closeMobileMenuFunc = () => {
     document.body.style.overflow = "unset";
     setCloseAnimation(true);
@@ -257,12 +207,6 @@ const Header = (props) => {
       setOpenMobileMenu(false);
       setCloseAnimation(false);
     }, 700);
-  };
-
-  const redirect = (event) => {
-    window.scrollTo(0, 0);
-    props.history.push(`/${event.target.id}`);
-    closeMobileMenuFunc();
   };
 
   // toggle Menu
@@ -277,47 +221,13 @@ const Header = (props) => {
       window.removeEventListener("resize", toggleMenuOnResize);
     };
   }, []);
-
   return (
     <div
-      className={classNames("Header", {
+      className={classNames("Header HeaderV2", {
         scrolled: scrolled === true,
         white: whiteBox === true,
         white_disable: disableBox === true,
       })}
-      onMouseEnter={() => {
-        if (
-          location === "/news" ||
-          location === `/news/category/${props.match.params.cate}` ||
-          location === "/collection" ||
-          location === `/collection/${path}`
-        ) {
-          setWhiteText(false);
-          setDisableBox(false);
-        }
-      }}
-      onMouseOver={() => {
-        if (
-          location === "/news" ||
-          location === `/news/category/${props.match.params.cate}` ||
-          location === "/collection" ||
-          location === `/collection/${path}`
-        ) {
-          setWhiteText(false);
-          setDisableBox(false);
-        }
-      }}
-      onMouseLeave={() => {
-        if (
-          (location === "/news" && window.pageYOffset < 50) ||
-          (location === `/news/category/${props.match.params.cate}` &&
-            window.pageYOffset < 50) ||
-          (location === "/collection" && window.pageYOffset < 50) ||
-          (location === `/collection/${path}` && window.pageYOffset < 50)
-        ) {
-          setWhiteText(true);
-        }
-      }}
     >
       <div
         className={
@@ -351,7 +261,7 @@ const Header = (props) => {
                 style={{ fontSize: "16px", height: "50px" }}
               ></input>
               <div
-                onClick={() => {
+                onClick={(event) => {
                   props.history.push(`/shop/${searchMobile}`);
                   closeMobileMenuFunc();
                 }}
@@ -378,68 +288,45 @@ const Header = (props) => {
                         location.slice(1) === item.label.toLowerCase() ||
                         home === item.label.toLowerCase(),
                     })}
+                    onClick={() => {
+                      if (!item.dropdownContent.length > 0) {
+                        props.history.push(item.url);
+                      } else {
+                        if (!openSubMenu) {
+                          setOpenSubMenu(item.id);
+                        } else {
+                          if (openSubMenu === item.id) {
+                            setOpenSubMenu(null);
+                          } else {
+                            setOpenSubMenu(item.id);
+                          }
+                        }
+                      }
+                    }}
                   >
                     <div
                       className="flex"
                       style={{ justifyContent: "space-between" }}
                     >
-                      <p id={item.label.toLowerCase()} onClick={redirect}>
-                        {item.label}
-                      </p>
+                      <p>{item.label}</p>
                       {item.dropdownContent.length > 0 && (
-                        <div
-                          style={{
-                            width: "30px",
-                          }}
-                          className="flex-center"
-                          onClick={() => {
-                            if (!item.dropdownContent.length > 0) {
-                              props.history.push(item.url);
-                            } else {
-                              if (!openSubMenu) {
-                                setOpenSubMenu(item.id);
-                              } else {
-                                if (openSubMenu === item.id) {
-                                  setOpenSubMenu(null);
-                                } else {
-                                  setOpenSubMenu(item.id);
-                                }
-                              }
-                            }
-                          }}
-                        >
+                        <div>
                           <FontAwesomeIcon icon={faAngleDown} />
                         </div>
                       )}
                     </div>
                     <div className="menu-mobile-sub" ref={subHeight}>
-                      {item.dropdownContent.map((item2, index) => {
+                      {item.dropdownContent.map((item, index) => {
                         return (
                           <div key={index} className="menu-item-sub-item">
-                            <p
-                              id={`${item.label.toLowerCase()}/${item2.dropdownTitle.replace(
-                                /\s+/g,
-                                "",
-                              )}`}
-                              onClick={redirect}
-                            >
-                              {item2.dropdownTitle}
-                            </p>
-                            {item2.dropdownList.map((item3, index) => {
+                            {item.dropdownTitle}
+                            {item.dropdownList.map((item, index) => {
                               return (
                                 <div
                                   className="menu-item-sub-item2"
                                   key={index}
                                 >
-                                  <p
-                                    id={`${item.label.toLowerCase()}/${item3.replace(
-                                      /\s+/g,
-                                      "",
-                                    )}`}
-                                    onClick={redirect}
-                                  >
-                                    {item3}
-                                  </p>
+                                  {item}
                                 </div>
                               );
                             })}
@@ -458,8 +345,7 @@ const Header = (props) => {
               }}
             >
               <FontAwesomeIcon icon={faUser} className="icon" />
-              {userInfo && <p>{userInfo.userName}</p>}
-              {!userInfo && <p>LOGIN</p>}
+              <p>LOGIN</p>
             </div>
           </div>
           <div
@@ -468,7 +354,6 @@ const Header = (props) => {
           ></div>
         </Div100vh>
       )}
-
       <ul className="menu flex-center">
         {navBar.map((item, index) => {
           return (
@@ -485,7 +370,7 @@ const Header = (props) => {
               url={item.url}
               dropdownContent={item.dropdownContent} // dropdown text
               className="menu-item"
-            />
+            ></MenuItemDropdown>
           );
         })}
       </ul>
@@ -544,6 +429,5 @@ const Header = (props) => {
       </div>
     </div>
   );
-};
-
-export default withRouter(Header);
+}
+export default withRouter(HeaderV2);

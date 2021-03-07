@@ -7,6 +7,7 @@ import News from "../News/News.js";
 export default function FashionNews(props) {
   const [news, setNews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState([]);
   const newsPerPage = 3;
 
   useEffect(() => {
@@ -39,22 +40,16 @@ export default function FashionNews(props) {
     pageNumbers.push(i);
   }
 
+  const limit = Math.ceil(news.length);
   const pages = [];
-
   if (currentPage === 2) {
     pages.push(currentPage - 1, currentPage, currentPage + 1);
-  } else {
-    if (currentPage === 1) {
-      pages.push(currentPage, currentPage + 1, currentPage + 2);
-    } else if (currentPage === 2) {
-      pages.push(currentPage - 1, currentPage, currentPage + 1);
-    } else if (currentPage > 2 && currentPage < pageNumbers.length - 1) {
-      pages.push(currentPage - 1, currentPage, currentPage + 1);
-    } else if (currentPage === pageNumbers.length - 1) {
-      pages.push(currentPage - 1, currentPage, currentPage + 1);
-    } else {
-      pages.push(currentPage - 2, currentPage - 1, currentPage);
-    }
+  } else if (currentPage === 1) {
+    pages.push(currentPage, currentPage + 1, currentPage + 2);
+  } else if (currentPage < limit) {
+    pages.push(currentPage - 1, currentPage, currentPage + 1);
+  } else if (currentPage === limit) {
+    pages.push(currentPage - 2, currentPage - 1, currentPage);
   }
 
   return (
@@ -94,7 +89,7 @@ export default function FashionNews(props) {
             <div
               id="999"
               className={classNames({
-                pagnigation_disable: currentPage === pageNumbers.length,
+                pagnigation_disable: currentPage >= limit,
               })}
             >
               →
