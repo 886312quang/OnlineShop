@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../App.css";
 import { withRouter } from "react-router-dom";
 import ProductOverlay from "./ProductOverlay";
+import ProductQuickView from "./ProductQuickView";
 
 const Product = (props) => {
   const [hover, setHover] = useState(false);
@@ -45,6 +46,7 @@ const Product = (props) => {
           setHover(false);
         }}
       >
+        <ProductQuickView view={view} closeView={closeView} product={product} />
         <div className="product-tag">
           {product.productSale > 0 && (
             <div className="product-tag-item sale">{product.productSale}%</div>
@@ -63,8 +65,8 @@ const Product = (props) => {
             src={product.productImg[1]}
             alt=""
           />
-          <ProductOverlay product={product} openView={openView} />
         </div>
+        <ProductOverlay product={product} openView={openView} />
       </div>
       <div className="product-title">{product.productName}</div>
       {product.productFinalPrice < product.productPrice && (
