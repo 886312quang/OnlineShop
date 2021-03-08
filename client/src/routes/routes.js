@@ -49,6 +49,15 @@ const publicRoutes = [
     permissionRequired: null,
     icon: "category",
   },
+  {
+    path: "/contact",
+    exact: true,
+    loader: () => import("../pages/Contact/index"),
+    menu: true,
+    label: "Contact",
+    permissionRequired: null,
+    icon: "contact",
+  },
 ];
 
 export default {

@@ -1960,7 +1960,7 @@
   margin-right: 20px;
   border: 1px #ddd solid;
   border-radius: 50%;
-  transition: .5s;
+  transition: 0.5s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1968,6 +1968,125 @@
 
 .widget-icon:hover {
   border: 1px #111 solid;
+}
+/* Contact */
+
+.ContactBody {
+  padding: 40px;
+}
+.google-map {
+  height: 100%;
+}
+.contact-container {
+  background-image: url(./assets/newsbanner.jpg) !important;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-info-title {
+  margin-top: 50px;
+  color: #888;
+  font-size: 18px;
+  width: 60%;
+}
+
+.contact-info-detail {
+  margin-top: 40px;
+  width: 60%;
+}
+
+.contact-icon {
+  font-size: 20px;
+  color: #888;
+  margin-right: 40px;
+  line-height: 100%;
+}
+
+.contact-info-item {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.contact-info-title2 {
+  font-size: 14px !important;
+  text-transform: uppercase;
+  margin-right: 30px;
+  color: #888 !important;
+  font-weight: bold !important;
+  width: 80px;
+}
+
+.contact-info-item p {
+  color: #111;
+  font-size: 14px;
+}
+
+.GetInTouch {
+  width: 100%;
+  margin: 40px 0;
+  justify-content: space-between;
+}
+
+.getintouch-container {
+  background-color: #edeff1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.GetInTouch .map {
+  width: 63%;
+}
+
+.google-map {
+  height: 100%;
+}
+
+.getintouch-form {
+  width: 37%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.getintouch-form label {
+  font-size: 30px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  font-family: Poppins-Medium;
+}
+
+.getintouch-form input {
+  width: 70%;
+  margin: 20px 0;
+  border: none;
+  height: 30px;
+  background: rgba(204, 204, 204, 0);
+  font-size: 14px;
+  border-bottom: 2px #bbb solid;
+  padding-bottom: 5px;
+}
+
+.getintouch-form input:focus {
+  outline: none !important;
+}
+
+.getintouch-form button {
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: sans-serif;
+  padding: 20px;
+  width: 70%;
+  margin-top: 40px;
+  margin-bottom: 60px;
 }
 
 /* Newsletter */
@@ -2399,7 +2518,19 @@
   }
   .widget-post-info {
     width: 90%;
-  } 
+  }
+  .getintouch-container {
+    flex-direction: column;
+  }
+  .GetInTouch .map {
+    width: 100%;
+    height: 500px;
+  }
+  .getintouch-form { 
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+  }
 }
 @media only screen and (max-width: 900px) {
   .menu li a {
@@ -2655,6 +2786,12 @@
     height: 400px;
     width: 100% !important;
   }
+  .ContactBody {
+    padding: 5px;
+  }
+  .contact-info-title {
+    margin-top: 30px;
+  }
 }
 @media only screen and (max-width: 780px) {
   .product-info-cart {
@@ -2760,6 +2897,10 @@
   .count-cart .left {
     margin: 0;
   }
+  .contact-info-title,
+  .contact-info-detail {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 650px) {
@@ -2822,6 +2963,10 @@
   .search-form,
   .login-form {
     padding: 0;
+  }
+  .contact-info-title,
+  .contact-info-detail {
+    width: 90%;
   }
 }
 
@@ -2915,6 +3060,18 @@
   .review-first {
     flex-direction: column;
   }
+  .contact-icon {
+    margin-right: 20px;
+  }
+  .contact-info-title2 {
+    margin-right: 20px;
+  }
+  .GetInTouch .map { 
+    height: 400px;
+  } 
+  .getintouch-form input {
+    width: 80%;
+  }
 }
 @media only screen and (max-width: 500px) {
   .Product {
@@ -2989,6 +3146,18 @@
   .product-info-addtocart {
     width: 140px;
   }
+  .contact-icon {
+    margin-right: 10px;
+  }
+  .contact-info-title2 {
+    margin-right: 10px;
+  }
+  .GetInTouch .map { 
+    height: 350px;
+  } 
+  .getintouch-form input {
+    width: 85%;
+  }
 }
 @media only screen and (max-width: 400px) {
   .logo img {
@@ -3061,6 +3230,12 @@
     font-size: 12px;
     margin: 0 5px;
   }
+  .GetInTouch .map { 
+    height: 280px;
+  } 
+  .getintouch-form input {
+    width: 100%;
+  } 
 }
 
 @media only screen and (max-width: 300px) {
