@@ -13,8 +13,10 @@ import { UserContext } from "../../../contexts/User";
 import axios from "axios";
 import Div100vh from "react-div-100vh";
 import MenuItemDropdown from "../../Menu/MenuItemDropdown";
-
+import Search from "../../Search/index";
+import Auth from "../../Auth/Auth";
 import "../../../App.css";
+import Cart from "../../Cart/Cart";
 
 const Header = (props) => {
   //Context
@@ -270,7 +272,7 @@ const Header = (props) => {
     if (window.innerWidth > 820) closeMobileMenuFunc();
   };
 
-   useEffect(() => {
+  useEffect(() => {
     toggleMenuOnResize();
     window.addEventListener("resize", toggleMenuOnResize);
     return () => {
@@ -542,6 +544,9 @@ const Header = (props) => {
           <FontAwesomeIcon icon={faUser} className="icon" />
         </div>
       </div>
+      <Search searchOpen={searchOpen} clickToClose={clickToClose} />
+      <Auth accountOpen={accountOpen} clickToClose={clickToClose} />
+      <Cart cartOpen={cartOpen} clickToClose={clickToClose} />
     </div>
   );
 };

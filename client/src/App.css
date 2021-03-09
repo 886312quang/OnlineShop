@@ -1969,6 +1969,265 @@
 .widget-icon:hover {
   border: 1px #111 solid;
 }
+
+/* Search | Cart | Login */
+.Search,
+.Account,
+.Cart {
+  background-color: #fff;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  padding: 40px;
+  transition: all 0.3s ease-in;
+  overscroll-behavior: contain;
+  overflow: scroll;
+}
+.Account {
+  background-color: #fff;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  padding: 40px;
+  transition: all 0.3s ease-in;
+  overscroll-behavior: contain;
+  overflow: scroll;
+}
+.account-container {
+}
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5px;
+  margin-bottom: 70px;
+}
+.search-close {
+  cursor: pointer;
+}
+.search-close .icon {
+  font-size: 22px;
+  font-weight: 300;
+}
+.search-title {
+  font-size: 32px;
+  font-family: sans-serif;
+  font-weight: 400;
+}
+.search-form {
+  padding: 0;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+.search-form form {
+  align-items: center;
+  border-bottom: 2px #ddd solid;
+}
+.search-form form input {
+  height: 50px;
+  border: none;
+  transition: 0.5s;
+  font-size: 18px;
+  flex-grow: 1;
+  color: #888;
+}
+.search-form form:hover {
+  border-bottom: 2px #111 solid;
+}
+.search-form form input:focus {
+  outline: none !important;
+}
+.search-form form .icon {
+  font-size: 20px;
+  margin: 0 20px;
+  color: #888;
+}
+.search-tab {
+  font-size: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+.search-tab-cate {
+  margin: 0 30px;
+  position: relative;
+  color: #888;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.search-tab-cate::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: #000;
+  margin-top: 3px;
+  position: absolute;
+  right: 0;
+  bottom: -9px;
+  transition: all 0.5s;
+  width: 0;
+}
+.search-tab-cate:hover::after {
+  animation-name: active_line;
+  animation-duration: 0.4s;
+  width: 100%;
+  left: 0;
+}
+.search-tab-cate:hover {
+  color: #000;
+}
+.search-tab-active::after {
+  width: 100% !important;
+  animation-name: none !important;
+}
+.search-tab-active {
+  color: #000 !important;
+}
+.cart-list {
+  width: 100%;
+  margin-bottom: 100px;
+}
+.cart-item {
+  border-top: 1px #eee solid;
+  height: 100px;
+  padding: 10px 0;
+}
+.cart-item:last-child {
+  border-bottom: 1px #eee solid;
+}
+.cart-product-mobile {
+  flex-grow: 1;
+  justify-content: space-between;
+}
+.cart-product-name {
+  width: 35%;
+  height: 100%;
+}
+.cart-product-amount {
+  /* width: 10%; */
+  height: 100%;
+}
+.cart-product-price {
+  width: 15%;
+  height: 100%;
+}
+.cart-product-img {
+  width: 15%;
+  height: 100%;
+}
+.login-err {
+  padding: 0 30px;
+  font-size: 12px;
+}
+.login-err div {
+  width: 35%;
+  padding: 5px;
+}
+.login-err div div {
+  width: 100%;
+  margin: 5px 0;
+  background-color: #fff7f9;
+  color: #1e1e1e;
+  border: 1px solid #ffcccf;
+  display: flex;
+  align-items: center;
+}
+.login-success {
+  background-color: #d9f3d9 !important;
+  border: 1px solid #52f55b !important;
+}
+.login-form {
+  padding: 0 30px;
+}
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+}
+.login-form form {
+  width: 35%;
+  border: none;
+}
+.login-form form:hover {
+  border-bottom: none !important;
+}
+.login-form input {
+  width: 100%;
+  font-size: 14px !important;
+  border-bottom: 2px #ddd solid !important;
+  margin-bottom: 30px;
+}
+.login-form input:hover,
+.login-form input:focus {
+  border-bottom: 2px #111 solid !important;
+}
+.login-form button {
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: sans-serif;
+  padding: 20px;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.check-box {
+  width: 20px;
+  height: 20px;
+  background-color: #ddd;
+  margin-right: 10px;
+  position: relative;
+}
+.check-box-active {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  background-color: #888;
+}
+.remember-login {
+  width: 100%;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+}
+.remember-login:hover .check-box {
+  background-color: #888;
+}
+.login-form label {
+  font-size: 14px;
+  border-bottom: 1px #888 solid;
+  color: #888;
+}
+.login-form label:hover {
+  border-bottom: 1px #000 solid;
+  color: #000;
+}
+.cart-checkout-box {
+  width: 100%;
+  background-color: #fff;
+  border: 1px #ddd solid;
+  height: 100px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0 320px;
+  justify-content: space-between;
+}
+.cart-checkout-text {
+  width: 70%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 200px;
+}
+.cart-checkout-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
 /* Contact */
 
 .ContactBody {
@@ -2445,6 +2704,18 @@
   .product-info-line {
     margin: 20px 0;
   }
+  .cart-product-img {
+    width: 80px;
+  }
+  .cart-product-name {
+    padding-left: 10px;
+    width: 30%;
+    font-style: 16px;
+  }
+  .cart-checkout-box {
+    padding: 0 200px;
+  }
+  
 }
 @media only screen and (max-width: 1000px) {
   .another-banner {
@@ -2526,10 +2797,14 @@
     width: 100%;
     height: 500px;
   }
-  .getintouch-form { 
+  .getintouch-form {
     width: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
+  }
+  .login-form form,
+  .login-err div {
+    width: 40%;
   }
 }
 @media only screen and (max-width: 900px) {
@@ -2643,6 +2918,45 @@
   }
   .product-info-addtocart p {
     font-size: 12px;
+  }
+  .cart-item:first-child {
+    display: none !important;
+  }
+  .cart-product-mobile {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  .cart-product-name {
+    font-size: 14px;
+    height: max-content;
+    width: 90%;
+  }
+  .cart-product-price {
+    width: 50%;
+    justify-content: flex-start !important;
+    padding-left: 10px;
+    height: max-content;
+    font-size: 12px;
+    color: #777;
+    height: 20px;
+    order: 2;
+  }
+  .cart-product-amount {
+    justify-content: flex-end !important;
+    order: 3;
+    width: 50%;
+    height: 20px;
+  }
+  .cart-checkout-box {
+    padding: 0 100px;
+  }
+  .login-form input:hover,
+  .login-form input:focus {
+    border: none !important;
+  }
+  .login-form form,
+  .login-err div {
+    width: 400px;
   }
 }
 @media only screen and (max-width: 860px) {
@@ -2800,6 +3114,9 @@
   .product-info-addtocart {
     padding: 0 10px;
   }
+  .cart-checkout-box {
+    padding: 0 40px;
+  } 
 }
 @media only screen and (max-width: 700px) {
   .Product {
@@ -3066,11 +3383,22 @@
   .contact-info-title2 {
     margin-right: 20px;
   }
-  .GetInTouch .map { 
+  .GetInTouch .map {
     height: 400px;
-  } 
+  }
   .getintouch-form input {
     width: 80%;
+  }
+  .Search,
+  .Account,
+  .Cart {
+    padding: 20px;
+  }
+  .cart-checkout-box {
+    padding: 0 50px;
+  }
+  .cart-checkout-text {
+    margin-right: 50px; 
   }
 }
 @media only screen and (max-width: 500px) {
@@ -3152,11 +3480,23 @@
   .contact-info-title2 {
     margin-right: 10px;
   }
-  .GetInTouch .map { 
+  .GetInTouch .map {
     height: 350px;
-  } 
+  }
   .getintouch-form input {
     width: 85%;
+  }
+  .Search,
+  .Account,
+  .Cart {
+    height: 1000px;
+  }
+  .login-form form,
+  .login-err div {
+    width: 90%;
+  }
+  .login-err {
+    padding: 0 0px;
   }
 }
 @media only screen and (max-width: 400px) {
@@ -3215,6 +3555,12 @@
   .product-info-title {
     padding: 0;
   }
+  .search-tab {
+    margin-bottom: 30px;
+  }
+  .search-form form input { 
+    margin-bottom: 20px;
+  }
 }
 @media only screen and (max-width: 350px) {
   .home-tab p {
@@ -3224,18 +3570,34 @@
   .product-detail {
     height: 250vw;
   }
+  .cart-checkout-text {
+    margin-right: 10px; 
+  }
+  .cart-checkout-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  .cart-checkout-box {
+    padding: 0 20px;
+  }
 }
 @media only screen and (max-width: 320px) {
   .home-tab p {
     font-size: 12px;
     margin: 0 5px;
   }
-  .GetInTouch .map { 
+  .GetInTouch .map {
     height: 280px;
-  } 
+  }
   .getintouch-form input {
     width: 100%;
+  }
+  .getintouch-form input {
+    width: 85%;
   } 
+  .search-form form input { 
+    margin-bottom: 15px;
+  }
 }
 
 @media only screen and (max-width: 300px) {
