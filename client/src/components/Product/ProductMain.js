@@ -12,8 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import HomeIcon from "@material-ui/icons/Home";
+import { CartContext } from "../../contexts/Cart";
 
 export default function ProductMain(props) {
   const [imgIndex, setImgIndex] = useState(0);
@@ -24,6 +23,25 @@ export default function ProductMain(props) {
 
   const sliderWidth = useRef(null);
   const productSmall = useRef(null);
+
+  const { addToCart, addToWishList } = useContext(CartContext);
+
+  const cartClick = () => {
+    setLoading(1);
+    setTimeout(() => {
+      setLoading(0);
+      addToCart(product, countCart);
+    }, 500);
+    setCountCart(1);
+  };
+
+  const wishListClick = () => {
+    setLoading(2);
+    setTimeout(() => {
+      setLoading(0);
+      addToWishList(product);
+    }, 500);
+  };
 
   const slugify = (str) => {
     str = str.replace(/^\s+|\s+$/g, ""); // trim
@@ -276,23 +294,35 @@ export default function ProductMain(props) {
               </div>
             </div>
             {loading === 1 && (
-              <div className="product-info-addtocart flex-center btn">
+              <div
+                className="product-info-addtocart flex-center btn"
+                onClick={cartClick}
+              >
                 <div className="loading-icon"></div>
               </div>
             )}
             {loading !== 1 && (
-              <div className="product-info-addtocart flex-center btn">
+              <div
+                className="product-info-addtocart flex-center btn"
+                onClick={cartClick}
+              >
                 <FontAwesomeIcon icon={faCartPlus} />
                 <p>Add to cart</p>
               </div>
             )}
             {loading === 2 && (
-              <div className="product-info-wishlist flex-center">
+              <div
+                className="product-info-wishlist flex-center"
+                onClick={wishListClick}
+              >
                 <div className="loading-icon"></div>
               </div>
             )}
             {loading !== 2 && (
-              <div className="product-info-wishlist flex-center">
+              <div
+                className="product-info-wishlist flex-center"
+                onClick={wishListClick}
+              >
                 <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
               </div>
             )}

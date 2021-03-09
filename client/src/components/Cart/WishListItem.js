@@ -2,15 +2,17 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { CartContext } from "../../contexts/Cart";
 
 export default function WishListItem(props) {
-
-    let wishListItems = [];
-    let removeFromWishList;
+  const { wishListItems, removeFromWishList, addToCart } = useContext(
+    CartContext,
+  );
 
   const cartClick = (event) => {
     const id = event.target.id;
     axios.get(`http://pe.heromc.net:4000/products/${id}`).then((res) => {
+      addToCart(res.data);
     });
   };
 

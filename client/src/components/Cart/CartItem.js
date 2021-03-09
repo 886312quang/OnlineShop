@@ -1,13 +1,16 @@
 import { faMinus, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
+import { CartContext } from "../../contexts/Cart";
 
 export default function CartItem(props) {
-  let cartItems = [];
-  let minusCount;
-  let updateCount;
-  let plusCount;
-  let removeFromCart;
+  const {
+    cartItems,
+    minusCount,
+    plusCount,
+    removeFromCart,
+    updateCount,
+  } = useContext(CartContext);
 
   return (
     <div

@@ -1,6 +1,9 @@
 import {
-    faAngleDown, faBars, faCartPlus, faSearch,
-    faUser
+  faAngleDown,
+  faBars,
+  faCartPlus,
+  faSearch,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -10,6 +13,10 @@ import Div100vh from "react-div-100vh";
 import { Link, withRouter } from "react-router-dom";
 import "../../../App.css";
 import MenuItemDropdown from "../../Menu/MenuItemDropdown";
+import { CartContext } from "../../../contexts/Cart";
+import Search from "../../Search/index";
+import Auth from "../../Auth/Auth";
+import Cart from "../../Cart/Cart";
 
 function HeaderV2(props) {
   const [scrolled, setScrolled] = useState(false);
@@ -23,6 +30,8 @@ function HeaderV2(props) {
   const [totalCart, setTotalCart] = useState(0);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const [searchMobile, setSearchMobile] = useState("");
+
+  const { cartItems, clickedCart } = useContext(CartContext);
 
   const location = props.history.location.pathname;
 
@@ -156,7 +165,6 @@ function HeaderV2(props) {
     setDisableBox(false);
     setScrolled(false);
 
-
     function onScroll() {
       if (window.pageYOffset < 50) {
         // top
@@ -177,6 +185,11 @@ function HeaderV2(props) {
       }
       this.prev = window.pageYOffset;
     }
+    let totalCartVirtual = 0;
+    for (let i in cartItems) {
+      totalCartVirtual += cartItems[i].count;
+    }
+    setTotalCart(totalCartVirtual);
 
     window.addEventListener("scroll", onScroll);
     return () => {
@@ -186,6 +199,8 @@ function HeaderV2(props) {
     location,
     dropdownHover,
     props.match.params.cate,
+    cartItems,
+    clickedCart,
   ]);
 
   if (searchOpen || accountOpen || cartOpen) {
@@ -214,7 +229,7 @@ function HeaderV2(props) {
     if (window.innerWidth > 820) closeMobileMenuFunc();
   };
 
-   useEffect(() => {
+  useEffect(() => {
     toggleMenuOnResize();
     window.addEventListener("resize", toggleMenuOnResize);
     return () => {
@@ -427,6 +442,9 @@ function HeaderV2(props) {
           <FontAwesomeIcon icon={faUser} className="icon" />
         </div>
       </div>
+      <Search searchOpen={searchOpen} clickToClose={clickToClose} />
+      <Auth accountOpen={accountOpen} clickToClose={clickToClose} />
+      <Cart cartOpen={cartOpen} clickToClose={clickToClose} />
     </div>
   );
 }
