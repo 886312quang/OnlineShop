@@ -10,6 +10,7 @@ import {
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../../../contexts/User";
+import { CartContext } from "../../../contexts/Cart";
 import axios from "axios";
 import Div100vh from "react-div-100vh";
 import MenuItemDropdown from "../../Menu/MenuItemDropdown";
@@ -37,6 +38,8 @@ const Header = (props) => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [closeAnimation, setCloseAnimation] = useState(false);
   const [searchMobile, setSearchMobile] = useState("");
+
+  const { cartItems, clickedCart } = useContext(CartContext);
 
   //Ref
   const subHeight = useRef();
@@ -236,12 +239,24 @@ const Header = (props) => {
       }
       this.prev = window.pageYOffset;
     }
+    let totalCartVirtual = 0;
+    for (let i in cartItems) {
+      totalCartVirtual += cartItems[i].count;
+    }
+    setTotalCart(totalCartVirtual);
 
     window.addEventListener("scroll", onScroll);
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, [location, dropdownHover, props.match.params.cate, path]);
+  }, [
+    location,
+    dropdownHover,
+    props.match.params.cate,
+    path,
+    cartItems,
+    clickedCart,
+  ]);
 
   if (searchOpen || accountOpen || cartOpen) {
     document.body.style.overflow = "hidden";

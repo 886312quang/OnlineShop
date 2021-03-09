@@ -2113,6 +2113,13 @@
   width: 15%;
   height: 100%;
 }
+.cart-product-delete {
+  display: flex;
+  align-items: center;
+}
+.cart-product-delete:hover {
+  cursor: pointer;
+}
 .login-err {
   padding: 0 30px;
   font-size: 12px;

@@ -7,7 +7,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import ReactStars from "react-rating-stars-component";
 import { withRouter } from "react-router-dom";
 import Slider from "react-slick";
@@ -16,6 +16,7 @@ import "slick-carousel/slick/slick.css";
 import "../../App.css";
 import "../../Styles/Product.css";
 import "../../Styles/Toast.css";
+import { CartContext } from "../../contexts/Cart";
 
 function ProductQuickView(props) {
   const [countCart, setCountCart] = useState(1);
@@ -43,13 +44,23 @@ function ProductQuickView(props) {
     autoplaySpeed: 2000,
   };
 
+  const { addToCart, addToWishList } = useContext(CartContext);
+
   const cartClick = () => {
-    //Add to cart
+    addToCart(props.product, countCart);
     setToast(true);
     setTimeout(() => {
       setToast(false);
     }, 2000);
   };
+  const wishListClick = () => {
+    setToast(true);
+    setTimeout(() => {
+      setToast(false);
+      addToWishList(product);
+    }, 500);
+  };
+
   const redirect = () => {
     window.scrollTo(0, 0);
     props.history.push(`/products/${props.product._id}`);
@@ -204,7 +215,7 @@ function ProductQuickView(props) {
                 <FontAwesomeIcon icon={faCartPlus} />
                 <p>Add to cart</p>
               </div>
-              <div className="product-info-wishlist flex-center">
+              <div className="product-info-wishlist flex-center" onClick={wishListClick}>
                 <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
               </div>
             </div>

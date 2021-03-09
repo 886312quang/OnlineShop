@@ -3,15 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import { withRouter } from "react-router-dom";
 import "../../App.css";
+import { CartContext } from "../../contexts/Cart";
 
 function ProductOverlay(props) {
   const [loading, setLoading] = useState(0);
+
+  const { addToCart, addToWishList } = useContext(CartContext);
 
   const cartClick = () => {
     setLoading(1);
     setTimeout(() => {
       setLoading(0);
-      // add to cart
+      addToCart(props.product);
     }, 500);
   };
 
@@ -19,7 +22,7 @@ function ProductOverlay(props) {
     setLoading(2);
     setTimeout(() => {
       setLoading(0);
-      // add to cart
+      addToWishList(props.product);
     }, 500);
   };
 

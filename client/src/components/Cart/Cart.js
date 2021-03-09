@@ -6,10 +6,11 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import CartItem from "./CartItem";
 import WishListItem from "./WishListItem";
 import { withRouter } from "react-router-dom";
+import { CartContext } from "../../contexts/Cart";
 
 function Account(props) {
   const [tabID, setTabID] = useState(0);
-  const total = 9999;
+  const { total } = useContext(CartContext);
 
   return (
     <div className={props.cartOpen === false ? "Cart displayNone" : "Cart"}>
