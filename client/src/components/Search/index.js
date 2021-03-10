@@ -8,12 +8,15 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { CartContext } from "../../contexts/Cart";
 
 export default function Search(props) {
   const [products, setProducts] = useState([]);
   const [constProducts, setConstProducts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [toast, setToast] = useState(false);
+
+  const { removeFromWishList, addToCart } = useContext(CartContext);
 
   // Test
   useEffect(() => {
@@ -33,6 +36,17 @@ export default function Search(props) {
       }
     }
     setProducts(search);
+  };
+
+  const cartClick = (event) => {
+    const id = event.target.id;
+    axios.get(`http://pe.heromc.net:4000/products/${id}`).then((res) => {
+      addToCart(res.data);
+    });
+    setToast(true);
+    setTimeout(() => {
+      setToast(false);
+    }, 2000);
   };
 
   return (
@@ -97,7 +111,10 @@ export default function Search(props) {
                   </div>
                   <div
                     className="product-info-addtocart wl-mb-addtocart flex-center btn"
-                    onClick={(event) => {}}
+                    onClick={(event) => {
+                      cartClick(event);
+                      removeFromWishList(event);
+                    }}
                     id={item._id}
                   >
                     <FontAwesomeIcon
