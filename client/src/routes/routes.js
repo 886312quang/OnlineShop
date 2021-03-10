@@ -69,7 +69,7 @@ const publicRoutes = [
   },
   {
     path: "/shop/:search",
-    exact: true,
+    exact: false,
     loader: () => import("../pages/Shop/Shop"),
     menu: true,
     label: "Shop",
@@ -87,7 +87,7 @@ const publicRoutes = [
   },
   {
     path: "/men/:cate",
-    exact: true,
+    exact: false,
     loader: () => import("../pages/Shop/Shop"),
     menu: true,
     label: "Shop men",
@@ -105,8 +105,17 @@ const publicRoutes = [
   },
   {
     path: "/women/:women",
-    exact: true,
+    exact: false,
     loader: () => import("../pages/Shop/Shop"),
+    menu: true,
+    label: "Shop women",
+    permissionRequired: null,
+    icon: "women",
+  },
+  {
+    path: "/checkout",
+    exact: true,
+    loader: () => import("../pages/Checkout/index"),
     menu: true,
     label: "Shop women",
     permissionRequired: null,
