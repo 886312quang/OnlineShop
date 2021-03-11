@@ -121,6 +121,15 @@ const publicRoutes = [
     permissionRequired: null,
     icon: "women",
   },
+  {
+    path: "/admin",
+    exact: true,
+    loader: () => import("../pages/Admin/index"),
+    menu: true,
+    label: "Admin",
+    permissionRequired: null,
+    icon: "admin",
+  },
 ];
 
 export default {
