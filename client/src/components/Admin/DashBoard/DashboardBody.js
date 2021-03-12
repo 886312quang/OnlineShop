@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../../../App.css";
 import "../../Styles/Dashboard.css";
 import DashboardHeader from "./DashboardHeader";
+import DashboardNews from "./News/DashboardNews";
+import DashboardNewsCreate from "./News/DashboardNewsCreate";
+import DashboardNewsEdit from "./News/DashboardNewsEdit";
 import classNames from "classnames";
 import Axios from "axios";
 
@@ -62,10 +65,6 @@ export default function DashboardBody(props) {
     );
   }, [props.productId, props.openEdit]);
 
-  const openMenuOnClick = () => {
-    props.setOpenMenuOnClick();
-  };
-
   return (
     <div
       className={classNames(
@@ -86,6 +85,31 @@ export default function DashboardBody(props) {
         openMenu={props.openMenu}
         orderNotice={props.orderNotice}
       />
+      {tabId === "5" && (
+        <DashboardNews
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          setCloseEditFunc={props.setCloseEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "5" && (
+        <DashboardNewsCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+          openMenu={props.openMenu}
+        />
+      )}
+      {props.openEdit && tabId === "5" && (
+        <DashboardNewsEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          openMenu={props.openMenu}
+          news={news}
+        />
+      )}
     </div>
   );
 }
