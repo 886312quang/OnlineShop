@@ -1,12 +1,28 @@
+import Axios from "axios";
+import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "../../../App.css";
 import "../../Styles/Dashboard.css";
+import DashboardCollection from "./Collection/DashboardCollection";
+import DashboardCollectionCreate from "./Collection/DashboardCollectionCreate";
+import DashboardCollectionEdit from "./Collection/DashboardCollectionEdit";
 import DashboardHeader from "./DashboardHeader";
 import DashboardNews from "./News/DashboardNews";
 import DashboardNewsCreate from "./News/DashboardNewsCreate";
 import DashboardNewsEdit from "./News/DashboardNewsEdit";
-import classNames from "classnames";
-import Axios from "axios";
+import DashboardOrder from "./Order/DashboardOrder";
+import DashboardOrderCreate from "./Order/DashboardOrderCreate";
+import DashboardOrderEdit from "./Order/DashboardOrderEdit";
+import DashboardProduct from "./Product/DashboardProduct";
+import DashboardProductCreate from "./Product/DashboardProductCreate";
+import DashboardProductEdit from "./Product/DashboardProductEdit";
+import DashboardSubscriber from "./Subscriber/DashboardSubscriber";
+import DashboardSubscriberCreate from "./Subscriber/DashboardSubscriberCreate";
+import DashboardSubscriberEdit from "./Subscriber/DashboardSubscriberEdit";
+import DashboardUser from "./User/DashboardUser";
+import DashboardUserCreate from "./User/DashboardUserCreate";
+import DashboardUserEdit from "./User/DashboardUserEdit";
+import DashboardMain from "./Main/DashboardMain";
 
 export default function DashboardBody(props) {
   const tabId = props.tabId;
@@ -85,6 +101,50 @@ export default function DashboardBody(props) {
         openMenu={props.openMenu}
         orderNotice={props.orderNotice}
       />
+      {tabId === "1" && <DashboardMain />}
+
+      {tabId === "3" && (
+        <DashboardOrder
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "3" && (
+        <DashboardOrderCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+        />
+      )}
+      {props.openEdit && tabId === "3" && (
+        <DashboardOrderEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          order={order}
+        />
+      )}
+      {tabId === "4" && (
+        <DashboardProduct
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "4" && (
+        <DashboardProductCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+        />
+      )}
+      {props.openEdit && tabId === "4" && (
+        <DashboardProductEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          product={product}
+        />
+      )}
       {tabId === "5" && (
         <DashboardNews
           setOpenCreateFunc={props.setOpenCreateFunc}
@@ -108,6 +168,69 @@ export default function DashboardBody(props) {
           setToastFunc={setToastFunc}
           openMenu={props.openMenu}
           news={news}
+        />
+      )}
+      {tabId === "6" && (
+        <DashboardUser
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "6" && (
+        <DashboardUserCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+        />
+      )}
+      {props.openEdit && tabId === "6" && (
+        <DashboardUserEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          user={user}
+        />
+      )}
+      {tabId === "7" && (
+        <DashboardCollection
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "7" && (
+        <DashboardCollectionCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+        />
+      )}
+      {props.openEdit && tabId === "7" && (
+        <DashboardCollectionEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          collection={collection}
+        />
+      )}
+      {tabId === "8" && (
+        <DashboardSubscriber
+          setOpenCreateFunc={props.setOpenCreateFunc}
+          setOpenEditFunc={props.setOpenEditFunc}
+          toast={toast}
+          isChange={isChange}
+        />
+      )}
+      {props.openCreate && tabId === "8" && (
+        <DashboardSubscriberCreate
+          setCloseCreateFunc={props.setCloseCreateFunc}
+          setToastFunc={setToastFunc}
+        />
+      )}
+      {props.openEdit && tabId === "8" && (
+        <DashboardSubscriberEdit
+          setCloseEditFunc={props.setCloseEditFunc}
+          setToastFunc={setToastFunc}
+          email={email}
         />
       )}
     </div>
