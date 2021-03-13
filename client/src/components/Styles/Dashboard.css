@@ -546,8 +546,7 @@
   border: none;
 }
 .recent-padding {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
+ 
 }
 .review-product {
   flex-grow: 1;
@@ -608,7 +607,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  max-width: 100%;
+  max-width: 200px;
   overflow: hidden;
   height: 20px;
 }
