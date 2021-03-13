@@ -5,6 +5,7 @@ import PublicRoute from "./PublicRoute";
 import AuthRoute from "./AuthRoute";
 import PrivateRoute from "./PrivateRoute";
 import CustomLoadable from "./CustomLoader/CustomLoadable";
+import OpenChatBtn from "../components/LiveChat/OpenChatBtn";
 
 const NotFound = () => import("../pages/Errors/Error404Page");
 
@@ -49,6 +50,7 @@ const RoutesComponent = () => (
 
       <Route component={CustomLoadable({ loader: NotFound })} />
     </Switch>
+    <OpenChatBtn />
   </Router>
 );
 

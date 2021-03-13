@@ -9,6 +9,7 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 export default function DashboardMenu(props) {
   const [openUserOpt, setOpenUserOpt] = useState(false);
@@ -44,15 +45,21 @@ export default function DashboardMenu(props) {
             className="flex-center"
             style={{ height: "24px", marginLeft: "12px" }}
           >
-            <p className="logo-text">WB</p>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <p className="logo-text" style={{ cursor: "pointer" }}>
+                WB
+              </p>
+            </Link>
           </div>
           {hideText === false && (
-            <img
+           <Link to="/">
+           <img
               alt=""
               src="https://demo.uix.store/sober/wp-content/themes/sober/images/logo-light.svg"
               height="24px"
               style={{ marginLeft: "27px" }}
             ></img>
+            </Link>
           )}
         </div>
         <div className="menu-line"></div>

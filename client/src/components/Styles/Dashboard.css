@@ -69,6 +69,8 @@
   font-size: 22px;
   font-family: sans-serif;
   font-weight: 300;
+  text-decoration: none;
+  color: white;
 }
 .db-menu-user {
   width: 100%;
@@ -546,7 +548,6 @@
   border: none;
 }
 .recent-padding {
- 
 }
 .review-product {
   flex-grow: 1;
@@ -1635,6 +1636,18 @@ select {
     height: 100%;
     background-color: #fff;
     flex-direction: column;
+  }
+  /* width */
+  .boxchat-mobile::-webkit-scrollbar {
+    display: none !important;
+  }
+  /* Track */
+  .boxchat-mobile::-webkit-scrollbar-track {
+    display: none !important;
+  }
+  /* Handle */
+  .boxchat-mobile::-webkit-scrollbar-thumb {
+    display: none !important;
   }
   .boxchat-mobile-header {
     height: 60px;

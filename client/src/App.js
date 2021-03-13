@@ -1,16 +1,19 @@
 import React, { Suspense } from "react";
 import "./App.css";
-import { UserProvider } from "./contexts/User";
 import { CartProvider } from "./contexts/Cart";
-import RoutesComponent from "./routes/RoutesComponent";
+import { UserProvider } from "./contexts/User";
+import { ChatProvider } from "./contexts/Chat";
 import Spinner from "./routes/CustomLoader/Spinner";
+import RoutesComponent from "./routes/RoutesComponent";
 
 function App() {
   return (
     <Suspense fallback={<Spinner />}>
       <UserProvider>
         <CartProvider>
-          <RoutesComponent />
+          <ChatProvider>
+            <RoutesComponent />
+          </ChatProvider>
         </CartProvider>
       </UserProvider>
     </Suspense>

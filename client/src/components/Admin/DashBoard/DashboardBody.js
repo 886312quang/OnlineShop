@@ -23,6 +23,7 @@ import DashboardUser from "./User/DashboardUser";
 import DashboardUserCreate from "./User/DashboardUserCreate";
 import DashboardUserEdit from "./User/DashboardUserEdit";
 import DashboardMain from "./Main/DashboardMain";
+import DashboardLiveChat from "../LiveChat/DashboardLiveChat";
 
 export default function DashboardBody(props) {
   const tabId = props.tabId;
@@ -102,7 +103,7 @@ export default function DashboardBody(props) {
         orderNotice={props.orderNotice}
       />
       {tabId === "1" && <DashboardMain />}
-
+      {tabId === "2" && <DashboardLiveChat />}
       {tabId === "3" && (
         <DashboardOrder
           setOpenCreateFunc={props.setOpenCreateFunc}
