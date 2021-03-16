@@ -1,14 +1,15 @@
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import "../../App.css";
 import { UserContext } from "../../contexts/User";
 import UserInfo from "./UserInfo";
+import { fetchSignin, fetchSignup } from "../../services/auth";
+import { fetchGetUser } from "../../services/user";
 
 function Auth(props) {
-  const { setUserInfoFunc } = useContext(UserContext);
+  const { setUserInfoFunc, userInfo } = useContext(UserContext);
 
   const [check, setCheck] = useState(false);
   const [tabID, setTabID] = useState(0);
@@ -24,31 +25,22 @@ function Auth(props) {
   const handleOnSubmit = (event) => {
     event.preventDefault();
     if (tabID === 0) {
-      axios
-        .post("http://pe.heromc.net:4000/users/login", {
-          loginEmail: user.loginEmail,
-          loginPassword: user.loginPassword,
-        })
+      fetchSignin({ email: user.loginEmail, password: user.loginPassword })
         .then((res) => {
           setArrSuccess((arrSuccess) => [...arrSuccess, "Login success!"]);
           setTimeout(() => {
             window.location.reload(false);
             document.body.style.overflow = "unset";
           }, 1000);
-          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("refresh-token", res.data.refreshToken);
           localStorage.setItem("user-id", res.data.user._id);
+          localStorage.setItem("exp", res.data.exp);
+          localStorage.setItem("iat", res.data.iat);
         })
-        .catch((err) => {
-          setArrErr((arrErr) => [...arrErr, err.response.data]);
-        });
+        .catch((err) => {});
     } else {
-      axios
-        .post("http://pe.heromc.net:4000/users/register", {
-          userName: user.registerName,
-          userEmail: user.registerEmail,
-          userPassword: user.registerPassword,
-          userRole: "user",
-        })
+      fetchSignup(user.registerName, user.registerPassword, user.registerEmail)
         .then((res) => {
           setArrSuccess((arrSuccess) => [...arrSuccess, res.data]);
           setTimeout(() => {
@@ -62,22 +54,17 @@ function Auth(props) {
     }
   };
 
+  const accessToken = localStorage.getItem("accessToken");
+
   useEffect(() => {
-    axios
-      .get(
-        `http://pe.heromc.net:4000/users/${localStorage.getItem("user-id")}`,
-        {
-          headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
-        },
-      )
-      .then((res) => {
-        setUserInfoFunc(res.data.user);
-        setLogin(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    const userId = localStorage.getItem("user-id");
+    if (accessToken !== null)
+      if (userId)
+        fetchGetUser(userId).then((res) => {
+          setUserInfoFunc(res.data);
+          setLogin(true);
+        });
+  }, [accessToken]); // accessToken
 
   let uniqueErr,
     uniqueSuccess = [];

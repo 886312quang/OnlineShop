@@ -120,7 +120,6 @@ const NewsMain = (props) => {
     // Get all category
     const cate = Object.values(
       news.reduce((a, { newCate }) => {
-        console.log(a);
         a[newCate] = a[newCate] || { newCate, count: 0 };
         a[newCate].count++;
         return a;
