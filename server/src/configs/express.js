@@ -37,5 +37,7 @@ const optionsCors = {
 
 app.use(cors(optionsCors));
 
+// Config routes
+app.use("/api", require("../routes/index"));
 
 module.exports = app;

@@ -1,4 +1,5 @@
 const jwtHelper = require("../helpers/jwt.helper");
+const jwt = require("jsonwebtoken");
 
 const accessTokenSecret =
   process.env.ACCESS_TOKEN_SECRET ||
@@ -37,5 +38,5 @@ let isAuth = async (req, res, next) => {
 };
 
 module.exports = {
-  isAuth: isAuth,
+  isAuth,
 };

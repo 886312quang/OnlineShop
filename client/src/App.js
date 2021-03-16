@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import "./App.css";
 import { CartProvider } from "./contexts/Cart";
 import { UserProvider } from "./contexts/User";

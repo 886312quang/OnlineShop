@@ -1,3 +1,4 @@
+const { resolve, reject } = require("bluebird");
 const jwt = require("jsonwebtoken");
 
 /**
