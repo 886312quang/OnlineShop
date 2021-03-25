@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../../App.css";
 import { withRouter } from "react-router-dom";
 import {
@@ -13,8 +13,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DashboardMenu from "./DashboardMenu";
 import DashboardBody from "./DashboardBody";
+import { UserContext } from "../../../contexts/User";
 
 function Dashboard(props) {
+  const { userInfo } = useContext(UserContext);
+
   const menuItems = [
     {
       id: "1",
@@ -63,7 +66,6 @@ function Dashboard(props) {
   const [openMenuMobile, setOpenMenuMobile] = useState(true);
   const [productId, setProductId] = useState("");
   const [orderNotice, setOrderNotice] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 

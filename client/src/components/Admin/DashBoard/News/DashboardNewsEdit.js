@@ -2,7 +2,12 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import DashboardEditor from "./DashboardEditor";
+import {
+  fetchGetNews,
+  updateNews,
+  deleteNewsImg,
+} from "../../../../services/news";
+import RichEditor from "./RichEditor";
 
 export default function DashboardNewsCreate(props) {
   const [inputValue, setInputValue] = useState([]);
@@ -28,44 +33,34 @@ export default function DashboardNewsCreate(props) {
       setNewsImg([news.newImg]);
       setNewsCate(news.newCate);
       setNewsContent(news.newContent);
-      axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
-        const test = Object.values(
+      fetchGetNews().then((res) => {
+        const cate = Object.values(
           res.data.reduce((a, { newCate }) => {
             a[newCate] = a[newCate] || { newCate };
             return a;
           }, Object.create(null)),
         );
-        setCateList(test);
+        setCateList(cate);
       });
     }
   }, [news]);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
 
     const formData = new FormData();
     const imageArr = Array.from(file);
     imageArr.forEach((image) => {
       formData.append("newImg", image);
     });
+    formData.append("newTime", new Date());
     formData.append("newCate", newsCate);
     formData.append("newTitle", newsTitle);
     formData.append("newContent", newsContent);
-    axios
-      .post(
-        `http://pe.heromc.net:4000/news/update/${news._id}`,
-        formData,
-        config,
-      )
-      .then(() => {
-        props.setCloseEditFunc(false);
-        props.setToastFunc(true);
-      });
+    updateNews(formData, news._id).then(() => {
+      props.setCloseEditFunc(false);
+      props.setToastFunc(true);
+    });
   };
 
   const addNewCate = () => {
@@ -82,9 +77,6 @@ export default function DashboardNewsCreate(props) {
     const items = [...newsImg];
     items.splice(id, 1);
     setNewsImg(items);
-    axios.post(`http://pe.heromc.net:4000/news/update/${news._id}`, {
-      deleteImgId: id,
-    });
   };
 
   return (
@@ -211,7 +203,7 @@ export default function DashboardNewsCreate(props) {
             </div>
           </div>
           <div style={{ border: "1px #ddd solid" }}>
-            <DashboardEditor
+            <RichEditor
               newsContent={newsContent}
               setNewsContent={setNewsContent}
             />

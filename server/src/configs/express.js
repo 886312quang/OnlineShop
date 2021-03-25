@@ -37,6 +37,7 @@ const optionsCors = {
 
 app.use(cors(optionsCors));
 
+app.use(express.static('public'))
 // Config routes
 app.use("/api", require("../routes/index"));
 

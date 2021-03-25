@@ -32,8 +32,6 @@ export const isAuthenticated = () => {
 
   const accessToken = window.localStorage.getItem("accessToken");
 
-  console.log(accessToken);
-
   if (accessToken) {
     let token = accessToken;
 
@@ -44,3 +42,5 @@ export const isAuthenticated = () => {
     return refreshAccessToken;
   }
 };
+
+

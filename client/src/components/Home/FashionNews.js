@@ -2,6 +2,7 @@ import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "../../App.css";
+import { fetchGetNews } from "../../services/news";
 import News from "../News/News.js";
 
 export default function FashionNews(props) {
@@ -11,8 +12,9 @@ export default function FashionNews(props) {
   const newsPerPage = 3;
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
+    fetchGetNews().then((res) => {
       setNews(res.data);
+      console.log(res.data);
     });
   }, []);
 

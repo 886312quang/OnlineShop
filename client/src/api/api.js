@@ -1,6 +1,5 @@
 import axios from "axios";
 import { isAuthenticated } from "../routes/permissionChecker";
-import { fetchRefreshToken } from "../services/auth";
 
 const api = axios.create({
   baseURL: "http://localhost:5000/api",
