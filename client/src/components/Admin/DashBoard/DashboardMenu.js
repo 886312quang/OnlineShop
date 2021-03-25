@@ -104,7 +104,10 @@ export default function DashboardMenu(props) {
               style={{ margin: "0" }}
               onClick={() => {
                 localStorage.removeItem("user-id");
-                localStorage.removeItem("token");
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refresh-token");
+                localStorage.removeItem("iat");
+                localStorage.removeItem("exp");
                 sessionStorage.removeItem("chat-id");
                 window.location.reload(false);
               }}

@@ -35,6 +35,12 @@ export default function DashboardEditor(props) {
     );
   };
 
+  const styleMap = {
+    STRIKETHROUGH: {
+      textDecoration: "line-through",
+    },
+  };
+
   useEffect(() => {
     if (props.newsContent) {
       let contentState = stateFromHTML(props.newsContent);
@@ -50,7 +56,8 @@ export default function DashboardEditor(props) {
         toolbarClassName="toolbarClassName"
         wrapperClassName="wrapperClassName"
         editorClassName="editorClassName"
-        onChange={setEditorState}
+        onChange={onEditorStateChange}
+        customStyleMap={styleMap}
       />
     </div>
   );

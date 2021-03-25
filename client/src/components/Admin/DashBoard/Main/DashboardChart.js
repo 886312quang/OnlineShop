@@ -14,7 +14,6 @@ export default function DashboardChart(props) {
     if (products.length > 0 && order.length > 0) {
       const allCate = Object.values(
         products.reduce((a, { productCate }) => {
-          console.log(productCate);
           a[productCate] = a[productCate] || { productCate, count: 0 };
           return a;
         }, Object.create(null)),

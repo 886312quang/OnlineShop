@@ -45,3 +45,8 @@ export const fetchVerifyEmailAccount = async (data) => {
   const response = await api.post("/auth/verify-email", data);
   return response;
 };
+
+export const authorize = async () => {
+  const response = await api.get("/auth/admin");
+  return response;
+};

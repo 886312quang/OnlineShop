@@ -11,8 +11,9 @@ let generateToken = (user, secretSignature, tokenLife) => {
   return new Promise((resolve, reject) => {
     const userData = {
       _id: user._id,
-      name: user.name,
+      name: user.userName,
       email: user.email,
+      role: user.role,
     };
 
     jwt.sign(

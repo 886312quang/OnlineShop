@@ -157,7 +157,10 @@ function AccountInfo(props) {
               }
               onClick={() => {
                 localStorage.removeItem("user-id");
-                localStorage.removeItem("token");
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refresh-token");
+                localStorage.removeItem("exp");
+                localStorage.removeItem("iat");
                 sessionStorage.removeItem("chat-id");
                 window.location.reload(false);
                 localStorage.removeItem("total");

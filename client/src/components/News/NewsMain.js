@@ -7,6 +7,7 @@ import NewsMainBig from "./NewsMainBig";
 import NewsMainSmall from "./NewsMainSmall";
 import NewsMainPag from "./NewsMainPag";
 import NewsMainWidget from "./NewsMainWidget";
+import { fetchGetNews } from "../../services/news";
 
 const NewsMain = (props) => {
   const [news, setNews] = useState([]);
@@ -26,7 +27,7 @@ const NewsMain = (props) => {
 
   useEffect(() => {
     if (searchNews) {
-      axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
+      fetchGetNews().then((res) => {
         const search = [];
         for (let i in res.data) {
           if (res.data[i].newTitle.toLowerCase().includes(searchNews)) {
@@ -42,7 +43,7 @@ const NewsMain = (props) => {
       });
     } else {
       if (props.history.location.pathname === "/news") {
-        axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
+        fetchGetNews().then((res) => {
           setNews(res.data);
         });
       } else {

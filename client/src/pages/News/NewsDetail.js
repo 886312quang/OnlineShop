@@ -1,21 +1,22 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../../App.css";
 import HeaderV2 from "../../components/Layout/Header/HeaderV2";
 import Footer from "../../components/Layout/Footer/Footer";
 import Newsletter from "../../components/Layout/Newsletter/Newsletter";
 import NewsContent from "../../components/News/NewsContent";
+import { countNewsView, getNewsById } from "../../services/news";
 
 export default function ProductDetail(props) {
   const [news, setNews] = useState();
 
+  const newsId = props.match.params.id;
+
   useEffect(() => {
-    axios
-      .get(`http://pe.heromc.net:4000/news/` + props.match.params.id)
-      .then((res) => {
-        setNews(res.data);
-      });
-  }, [props.match.params.id]);
+    getNewsById(newsId).then((res) => {
+      setNews(res.data);
+    });
+    countNewsView(newsId);
+  }, [newsId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

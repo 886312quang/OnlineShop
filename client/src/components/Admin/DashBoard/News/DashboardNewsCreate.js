@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import DashboardEditor from "./DashboardEditor";
+import { postNews, fetchGetNews } from "../../../../services/news";
+import RichEditor from "./RichEditor";
 
 export default function DashboardNewsCreate(props) {
   const [inputValue, setInputValue] = useState([]);
@@ -20,26 +20,19 @@ export default function DashboardNewsCreate(props) {
   };
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
-      const test = Object.values(
+    fetchGetNews().then((res) => {
+      const cate = Object.values(
         res.data.reduce((a, { newCate }) => {
-          console.log(a);
-          console.log(newCate);
           a[newCate] = a[newCate] || { newCate };
           return a;
         }, Object.create(null)),
       );
-      setCateList(test);
+      setCateList(cate);
     });
   }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
 
     const formData = new FormData();
 
@@ -51,7 +44,8 @@ export default function DashboardNewsCreate(props) {
     formData.append("newCate", cateValue);
     formData.append("newTitle", inputValue.title);
     formData.append("newContent", newsContent);
-    axios.post("http://pe.heromc.net:4000/news", formData, config).then(() => {
+
+    postNews(formData).then(() => {
       props.setCloseCreateFunc(false);
       props.setToastFunc(true);
     });
@@ -192,7 +186,7 @@ export default function DashboardNewsCreate(props) {
             </div>
           </div>
           <div style={{ border: "1px #ddd solid" }}>
-            <DashboardEditor setNewsContent={setNewsContent} />
+            <RichEditor setNewsContent={setNewsContent} />
           </div>
           <div className="flex-center" style={{ marginTop: "40px" }}>
             <button className="create-box-btn btn">Add news</button>

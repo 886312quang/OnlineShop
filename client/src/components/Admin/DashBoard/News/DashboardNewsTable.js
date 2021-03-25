@@ -3,8 +3,8 @@ import "../../../../App.css";
 import "../../../Styles/Dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import classNames from "classnames";
+import { deleteNewsById, fetchGetNews } from "../../../../services/news";
 
 export default function DashboardNewsTable(props) {
   const [news, setNews] = useState([]);
@@ -14,7 +14,7 @@ export default function DashboardNewsTable(props) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
+    fetchGetNews().then((res) => {
       setNews(res.data);
       setConstNews(res.data);
     });
@@ -161,9 +161,7 @@ export default function DashboardNewsTable(props) {
   }
 
   const deleteOnClick = (event) => {
-    axios.post(`http://pe.heromc.net:4000/news/delete/:${event.target.id}`, {
-      productId: event.target.id,
-    });
+    deleteNewsById(event.target.id);
     setNews(
       news.filter((item) => {
         return item._id !== event.target.id;
@@ -199,34 +197,38 @@ export default function DashboardNewsTable(props) {
             </div>
           </div>
           <div className="dashboard-table" style={{ tableLayout: "fixed" }}>
-            <tbody>
-              <tr>
-                {props.table.map((item, index) => {
-                  return (
-                    <th
-                      key={index}
-                      className="table-new-title"
-                      onClick={(e) => sortTable(e)}
-                      id={item}
-                    >
-                      {item}
-                    </th>
-                  );
-                })}
-              </tr>
-              {current.map((item, index) => {
-                const date = new Date(item.newTime);
-                const day = date.getDate();
-                const month = date.getMonth() + 1;
-                const year = date.getFullYear();
-                const shortedDate = day + "/" + month + "/" + year;
+            <table className="dashboard-table">
+              <tbody
+                className="dashboard-table"
+                style={{ tableLayout: "fixed" }}
+              >
+                <tr>
+                  {props.table.map((item, index) => {
+                    return (
+                      <th
+                        key={index}
+                        className="table-new-title"
+                        onClick={(e) => sortTable(e)}
+                        id={item}
+                      >
+                        {item}
+                      </th>
+                    );
+                  })}
+                </tr>
+                {current.map((item, index) => {
+                  const date = new Date(item.newTime);
+                  const day = date.getDate();
+                  const month = date.getMonth() + 1;
+                  const year = date.getFullYear();
+                  const shortedDate = day + "/" + month + "/" + year;
 
-                return (
-                  <tr key={index}>
-                    <td>
-                      <p>{item.newTitle}</p>
-                    </td>
-                    {/*  <td
+                  return (
+                    <tr key={index}>
+                      <td>
+                        <p>{item.newTitle}</p>
+                      </td>
+                      {/*  <td
                       className="table-mobile-newscontent"
                       style={{
                         padding: "10px 10px",
@@ -234,43 +236,44 @@ export default function DashboardNewsTable(props) {
                       }}
                       dangerouslySetInnerHTML={{ __html: item.newContent }}
                     ></td> */}
-                    <td className="table-mobile-newscate">
-                      <p>{item.newCate}</p>
-                    </td>
-                    <td className="table-mobile-newsdate">
-                      <p>{shortedDate}</p>
-                    </td>
-                    <td className="table-mobile-newsview">
-                      <p>{item.newView}</p>
-                    </td>
-                    <td>
-                      <div className="action-table flex">
-                        <div
-                          className="action-item flex-center action-green"
-                          onClick={props.setOpenEditFunc}
-                          id={item._id}
-                        >
-                          <FontAwesomeIcon
-                            style={{ pointerEvents: "none" }}
-                            icon={faPencilAlt}
-                          />
+                      <td className="table-mobile-newscate">
+                        <p>{item.newCate}</p>
+                      </td>
+                      <td className="table-mobile-newsdate">
+                        <p>{shortedDate}</p>
+                      </td>
+                      <td className="table-mobile-newsview">
+                        <p>{item.newView}</p>
+                      </td>
+                      <td>
+                        <div className="action-table flex">
+                          <div
+                            className="action-item flex-center action-green"
+                            onClick={props.setOpenEditFunc}
+                            id={item._id}
+                          >
+                            <FontAwesomeIcon
+                              style={{ pointerEvents: "none" }}
+                              icon={faPencilAlt}
+                            />
+                          </div>
+                          <div
+                            className="action-item flex-center action-red"
+                            onClick={deleteOnClick}
+                            id={item._id}
+                          >
+                            <FontAwesomeIcon
+                              style={{ pointerEvents: "none" }}
+                              icon={faTimes}
+                            />
+                          </div>
                         </div>
-                        <div
-                          className="action-item flex-center action-red"
-                          onClick={deleteOnClick}
-                          id={item._id}
-                        >
-                          <FontAwesomeIcon
-                            style={{ pointerEvents: "none" }}
-                            icon={faTimes}
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
             <div
               className="pagination-container flex"
               style={{ justifyContent: "flex-end", margin: "20px 0" }}
