@@ -98,7 +98,6 @@ const Header = (props) => {
         dropdownContent: [],
       },
     ];
-    setNavBar(navBar);
 
     axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
       let virtualNavBar = [...navBar];

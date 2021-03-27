@@ -1,7 +1,6 @@
 const express = require("express");
 const multer = require("multer");
 const AuthMiddleware = require("../middlewares/Auth.Middleware");
-const admin = require("../middlewares/adminRoute");
 const { User, Admin } = require("../helpers/role");
 var upload = multer({ dest: "./public/images" });
 const { news } = require("../controllers/index");

@@ -6,6 +6,7 @@ import ProductMain from "../../components/Product/ProductMain";
 import ProductRecommend from "../../components/Product/ProductRecommend";
 import ProductReview from "../../components/Product/ProductReview";
 import axios from "axios";
+import { getProductById } from "../../services/products";
 
 export default function Product(props) {
   const [product, setProduct] = useState();
@@ -104,11 +105,9 @@ export default function Product(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.style.overflow = "unset";
-    axios
-      .get(`http://pe.heromc.net:4000/products/` + props.match.params.id)
-      .then((res) => {
-        setProduct(res.data);
-      });
+    getProductById(props.match.params.id).then((res) => {
+      setProduct(res.data);
+    });
   }, [props.match.params.id]);
 
   return (

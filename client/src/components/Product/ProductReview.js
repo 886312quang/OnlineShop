@@ -3,8 +3,7 @@ import "../../App.css";
 import ReactStars from "react-rating-stars-component";
 import ProductReviewContent from "./ProductReviewContent";
 import { UserContext } from "../../contexts/User";
-import axios from "axios";
-import { functionsIn } from "lodash";
+import { createReview } from "../../services/products";
 
 export default function ProductReview(props) {
   const { userInfo } = useContext(UserContext);
@@ -39,7 +38,35 @@ export default function ProductReview(props) {
     },
   };
 
-  const onSubmit = (e) => {};
+  const sendReview = (event) => {
+    event.preventDefault();
+    if (userInfo) {
+      const data = {
+        ratingName: nameInput,
+        ratingDate: new Date().toString(),
+        ratingText: reviewInput,
+        ratingEmail: emailInput,
+        ratingStar: ratingValue,
+        ratingAvt: userInfo.userAvt,
+      };
+      createReview(data, product._id);
+      setProductVote((productVote) => [...productVote, data]);
+      setReviewInput("");
+    } else {
+      const data = {
+        ratingName: nameInput,
+        ratingDate: new Date().toString(),
+        ratingText: reviewInput,
+        ratingEmail: emailInput,
+        ratingStar: ratingValue,
+        ratingAvt:
+          "http://pe.heromc.net:4000/images/16f9bbf512b66a228f7978e34d8fb163",
+      };
+      createReview(data, product._id);
+      setProductVote((productVote) => [...productVote, data]);
+      setReviewInput("");
+    }
+  };
 
   return (
     <div className="ProductReview" ref={props.bRef} id={props.id}>
@@ -142,7 +169,7 @@ export default function ProductReview(props) {
                   Your rating *
                 </div>
                 <ReactStars {...defaultStar} />
-                <form className="review-form" onSubmit={onSubmit}>
+                <form className="review-form" onSubmit={sendReview}>
                   <p className="review-form-title">Your review *</p>
                   <input
                     type="text"

@@ -2,6 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {
+  createCategory,
+  deleteProductImg,
+  getCategory,
+  getProducts,
+  updateProduct,
+} from "../../../../services/products";
 
 export default function DashboardProductEdit(props) {
   const createForm = useRef();
@@ -80,10 +87,10 @@ export default function DashboardProductEdit(props) {
       setProductSex(product.productSex);
       setProductSize(product.productSize);
       setProductGroupCate(product.productGroupCate);
-      axios.get(`http://pe.heromc.net:4000/category`).then((res) => {
+      getCategory().then((res) => {
         setCate(res.data);
       });
-      axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+      getProducts().then((res) => {
         const test = Object.values(
           res.data.reduce((a, { productGroupCate }) => {
             a[productGroupCate] = a[productGroupCate] || { productGroupCate };
@@ -126,12 +133,7 @@ export default function DashboardProductEdit(props) {
     formData.append("productDes", productDes);
     formData.append("productSex", productSex);
     formData.append("productDate", new Date());
-    axios
-      .post(
-        `http://pe.heromc.net:4000/products/update/${product._id}`,
-        formData,
-        config,
-      )
+    updateProduct(formData, product._id)
       .then(() => {
         props.setCloseEditFunc(false);
         props.setToastFunc(true);
@@ -142,9 +144,7 @@ export default function DashboardProductEdit(props) {
   };
 
   const addNewCate = () => {
-    axios.post("http://pe.heromc.net:4000/category", {
-      cateName: inputValue.cate,
-    });
+    createCategory({ cateName: inputValue.cate });
     setCate((cate) => [...cate, { cateName: inputValue.cate }]);
     setProductCate(inputValue.cate);
     cateInput.current.value = "";
@@ -168,9 +168,7 @@ export default function DashboardProductEdit(props) {
     const items = [...productImg];
     items.splice(id, 1);
     setProductImg(items);
-    axios.post(`http://pe.heromc.net:4000/products/update/${product._id}`, {
-      deleteImgId: id,
-    });
+    deleteProductImg(product._id, items);
   };
 
   return (

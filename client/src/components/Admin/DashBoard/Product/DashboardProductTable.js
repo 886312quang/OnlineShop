@@ -4,6 +4,7 @@ import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "../../../../App.css";
+import { deleteProductById, deleteProductImg, getProducts } from "../../../../services/products";
 import "../../../Styles/Dashboard.css";
 
 export default function DashboardProductTable(props) {
@@ -16,7 +17,7 @@ export default function DashboardProductTable(props) {
   const [isSortBySold, setIsSortBySold] = useState(false);
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getProducts().then((res) => {
       setProducts(res.data);
       setConstProducts(res.data);
     });
@@ -100,12 +101,7 @@ export default function DashboardProductTable(props) {
   }
 
   const deleteOnClick = (event) => {
-    axios.post(
-      `http://pe.heromc.net:4000/products/delete/:${event.target.id}`,
-      {
-        productId: event.target.id,
-      },
-    );
+    deleteProductById(event.target.id);
     setProducts(
       products.filter((item) => {
         return item._id !== event.target.id;
