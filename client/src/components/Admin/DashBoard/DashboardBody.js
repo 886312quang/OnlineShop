@@ -25,6 +25,7 @@ import DashboardUserEdit from "./User/DashboardUserEdit";
 import DashboardMain from "./Main/DashboardMain";
 import DashboardLiveChat from "../LiveChat/DashboardLiveChat";
 import { getNewsById } from "../../../services/news";
+import { getProductById } from "../../../services/products";
 
 export default function DashboardBody(props) {
   const tabId = props.tabId;
@@ -51,16 +52,12 @@ export default function DashboardBody(props) {
   };
 
   useEffect(() => {
-    Axios.get(`http://pe.heromc.net:4000/products/${props.productId}`).then(
-      (res) => {
-        setProduct(res.data);
-      },
-    );
-    getNewsById(props.productId).then(
-      (res) => {
-        setNews(res.data);
-      },
-    );
+    getProductById(props.productId).then((res) => {
+      setProduct(res.data);
+    });
+    getNewsById(props.productId).then((res) => {
+      setNews(res.data);
+    });
     Axios.get(`http://pe.heromc.net:4000/users/list/${props.productId}`).then(
       (res) => {
         setUser(res.data);

@@ -3009,11 +3009,14 @@
   .shopbody-main {
     width: 100%;
   }
+  .menu {
+    display: none;
+  }
+  .menu-mobile {
+    display: flex;
+  }
 }
 @media only screen and (max-width: 900px) {
-  .menu li a {
-    margin: 0 13px;
-  }
   .banner-box {
     height: 435px;
   }
@@ -3208,12 +3211,6 @@
   }
   .ProductBody {
     padding: 0 20px;
-  }
-  .menu {
-    display: none;
-  }
-  .menu-mobile {
-    display: flex;
   }
   .search-icon,
   .login-icon {

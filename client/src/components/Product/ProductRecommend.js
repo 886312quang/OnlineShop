@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../../App.css";
+import { getProducts } from "../../services/products";
 import Product from "../Product/Product.js";
 
 export default function ProductRecommend(props) {
@@ -11,7 +12,7 @@ export default function ProductRecommend(props) {
   }
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getProducts().then((res) => {
       setProducts(res.data);
     });
   }, []);

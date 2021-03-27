@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HomeTabItem from "./HomeTabItem";
 import "../../App.css";
 import axios from "axios";
+import { getProducts } from "../../services/products";
 
 export default function HomeTab() {
   const [currentTab, setCurrentTab] = useState(1);
@@ -9,7 +10,7 @@ export default function HomeTab() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getProducts().then((res) => {
       setProducts(res.data);
     });
   }, []);
