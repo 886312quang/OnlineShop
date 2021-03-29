@@ -18,12 +18,9 @@ var productSchema = new mongoose.Schema(
     productSold: Number,
     productDes: String,
     productVote: Array,
-    // name: String,
-    // ratingTitle: String,
-    // ratingText: String,
-    // ratingDate: Date,
-    // ratingStar: Number,
-    // ratingImg: Array
+    createdAt: { type: Number, default: Date.now },
+    updatedAt: { type: Number, default: null },
+    deletedAt: { type: Number, default: null },
   },
   {
     versionKey: false,

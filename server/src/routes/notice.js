@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const AuthMiddleware = require("../middlewares/Auth.Middleware");
 const { User, Admin } = require("../helpers/role");
-const { category } = require("../controllers/index");
+const { notice } = require("../controllers/index");
 
-router.get("/", category.index);
-router.post("/", AuthMiddleware.authorize(Admin), category.postCategory);
+router.get("/", notice.index);
+router.post("/update", AuthMiddleware.authorize(Admin), notice.updateNotice);
 
 module.exports = router;

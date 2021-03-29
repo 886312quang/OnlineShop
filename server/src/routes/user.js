@@ -5,5 +5,6 @@ const AuthMiddleware = require("../middlewares/Auth.Middleware");
 const router = express.Router();
 
 router.route("/:id").get(AuthMiddleware.isAuth, user.info);
+router.route("/").get(user.index);
 
 module.exports = router;

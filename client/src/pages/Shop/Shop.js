@@ -8,6 +8,7 @@ import ShopMain from "../../components/Shop/ShopMain";
 import bg from "../../assets/S3.jpg";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { getProducts } from "../../services/products";
 
 function Shop(props) {
   const [products, setProducts] = useState([]);
@@ -22,7 +23,7 @@ function Shop(props) {
 
   useEffect(() => {
     if (sex === "shop") {
-      axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+      getProducts().then((res) => {
         const virtualCate = [...res.data];
         //Get all category
         const sortedcate = Object.values(
@@ -52,7 +53,7 @@ function Shop(props) {
       });
     } else {
       sex.toLowerCase() === "men" ? (sex = "man") : (sex = "woman");
-      axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+      getProducts().then((res) => {
         const virtualCate = [];
         for (let i in res.data) {
           if (sex === "woman") {

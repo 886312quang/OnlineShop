@@ -8,6 +8,9 @@ var newsSchema = new mongoose.Schema(
     newTitle: String,
     newContent: String,
     newView: Number,
+    createdAt: { type: Number, default: Date.now },
+    updatedAt: { type: Number, default: null },
+    deletedAt: { type: Number, default: null },
   },
   {
     versionKey: false,

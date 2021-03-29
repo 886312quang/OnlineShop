@@ -39,7 +39,9 @@ const Header = (props) => {
   const [closeAnimation, setCloseAnimation] = useState(false);
   const [searchMobile, setSearchMobile] = useState("");
 
-  const { cartItems, clickedCart } = useContext(CartContext);
+  const { cartItems, clickedCart, createOrderContext } = useContext(
+    CartContext,
+  );
 
   //Ref
   const subHeight = useRef();
@@ -255,6 +257,7 @@ const Header = (props) => {
     path,
     cartItems,
     clickedCart,
+    createOrderContext,
   ]);
 
   if (searchOpen || accountOpen || cartOpen) {
