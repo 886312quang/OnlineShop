@@ -4,6 +4,7 @@ import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "../../../../App.css";
+import { deleteOrder, getOrder } from "../../../../services/order";
 import "../../../Styles/Dashboard.css";
 
 export default function DashboardUserTable(props) {
@@ -13,7 +14,7 @@ export default function DashboardUserTable(props) {
   const [constOrder, setConstOrder] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/order`).then((res) => {
+    getOrder().then((res) => {
       setOrder(res.data);
       setConstOrder(res.data);
     });
@@ -98,17 +99,13 @@ export default function DashboardUserTable(props) {
 
   const deleteOnClick = (event) => {
     const id = event.target.id;
-    axios
-      .post(`http://pe.heromc.net:4000/order/delete/:${event.target.id}`, {
-        id: id,
-      })
-      .then(() => {
-        setOrder(
-          order.filter((item) => {
-            return item._id !== id;
-          }),
-        );
-      });
+    deleteOrder(id).then(() => {
+      setOrder(
+        order.filter((item) => {
+          return item._id !== id;
+        }),
+      );
+    });
   };
 
   const searchOnSubmit = (event) => {
@@ -236,7 +233,7 @@ export default function DashboardUserTable(props) {
                       <ul style={{ margin: "10px 0" }}>
                         <li className="flex">
                           <p style={{ marginRight: "5px", fontWeight: "bold" }}>
-                            #{item.orderId}
+                            #{index}
                           </p>
                           <p className="mobile-table-name">
                             by {item.orderName}

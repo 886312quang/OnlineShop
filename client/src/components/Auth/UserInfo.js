@@ -5,7 +5,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
 import "../../App.css";
-import "../../Styles/Account.css";
+import "../Styles/Account.css";
+import { getOrder, getOrderByUser } from "../../services/order";
 
 function AccountInfo(props) {
   const [tinh, setTinh] = useState([]);
@@ -29,10 +30,10 @@ function AccountInfo(props) {
   useEffect(() => {
     if (userInfo) {
       setUserName(userInfo.userName);
-      setUserEmail(userInfo.userEmail);
-      setUserPhone(userInfo.userPhone);
-      setUserAvt(userInfo.userAvt);
-      setUserAddress(userInfo.userAddress);
+      setUserEmail(userInfo.email);
+      setUserPhone(userInfo.phone);
+      setUserAvt(userInfo.avatar);
+      setUserAddress(userInfo.address);
       if (userInfo.userTinh !== "") {
         axios.get(`http://pe.heromc.net:4000/vietnam`).then((res) => {
           setTinh(res.data[0].tinh);
@@ -54,12 +55,10 @@ function AccountInfo(props) {
       if (userInfo.userHuyen !== "") {
         setUserHuyen(userInfo.userHuyen);
       }
-      axios.get(`http://pe.heromc.net:4000/order`).then((res) => {
+      getOrderByUser(userInfo.email).then((res) => {
         const orderList2 = [];
         for (let i in res.data) {
-          if (res.data[i].orderEmail === userInfo.userEmail) {
-            orderList2.push(res.data[i]);
-          }
+          orderList2.push(res.data[i]);
         }
         setOrderList(orderList2);
       });
@@ -402,7 +401,7 @@ function AccountInfo(props) {
                                 WebkitLineClamp: "3",
                               }}
                             >
-                              {item.orderAddress}, {item.orderHuyen},{" "}
+                              {item.orderAddress}, {item.orderHuyen} {" "}
                               {item.orderTinh}
                             </p>
                           </div>
@@ -424,7 +423,6 @@ function AccountInfo(props) {
                               className="flex"
                               style={{ justifyContent: "space-between" }}
                             >
-                              {/* <p style={{margin: '10px 0', width: '100%', WebkitLineClamp: '2'}}>{virtualArr.productName}</p> */}
                               <p
                                 style={{
                                   margin: "10px 0",

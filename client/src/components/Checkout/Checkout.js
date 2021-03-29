@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
+import { CartContext } from "../../contexts/Cart";
+import { createOrder } from "../../services/order";
 import "../Styles/Checkout.css";
 
 function Checkout(props) {
@@ -25,6 +27,7 @@ function Checkout(props) {
   const [confirmSubTotal, setConfirmSubTotal] = useState(0);
 
   const { userInfo } = useContext(UserContext);
+  const { createOrderContext } = useContext(CartContext);
 
   const subTotal = localStorage.getItem("total");
   const total = Number(subTotal) + Number(shipping);
@@ -51,18 +54,16 @@ function Checkout(props) {
       orderDate: new Date(),
     };
 
-    axios.post("http://pe.heromc.net:4000/order", data);
-    setTimeout(() => {
-      setConfirm(true);
-      document.body.style.overflow = "hidden";
-      window.scrollTo(0, 0);
-    }, 1000);
+    createOrder(data);
+
+    setConfirm(true);
+    document.body.style.overflow = "hidden";
+    window.scrollTo(0, 0);
     setOrderPaymentMethod("cash on delivery");
     let addressStr = addressInput + ", " + userTinh + ", " + userHuyen;
     setOrderAddressConfirm(addressStr);
     setConfirmSubTotal(subTotal);
-    localStorage.removeItem("total");
-    localStorage.removeItem("cart");
+    createOrderContext();
   };
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function Checkout(props) {
       setUserAvt(userInfo.userAvt);
       set_Id(userInfo._id);
       setNameInput(userInfo.userName);
-      setEmailInput(userInfo.userEmail);
+      setEmailInput(userInfo.email);
       setPhoneInput(userInfo.userPhone);
       setAddressInput(userInfo.userAddress);
       if (userInfo.userTinh !== "") {
@@ -97,10 +98,6 @@ function Checkout(props) {
     }
     setCartList(JSON.parse(localStorage.getItem("cart")));
   }, [userInfo]);
-
-  const checkedPayMent = (event) => {
-    setMethodPayMent(Number(event.target.id));
-  };
 
   return (
     <div className="CheckoutBody">
@@ -232,8 +229,6 @@ function Checkout(props) {
                 style={{ marginTop: "30px", marginBottom: "30px" }}
                 onClick={() => {
                   document.body.style.overflow = "unset";
-                  localStorage.removeItem("total");
-                  localStorage.removeItem("cart");
                   props.history.push("/shop");
                 }}
               >

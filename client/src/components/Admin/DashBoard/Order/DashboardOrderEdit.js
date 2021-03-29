@@ -1,7 +1,10 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { set } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import { updateOrder } from "../../../../services/order";
+import { getProductById, getProducts } from "../../../../services/products";
 
 export default function DashboardOrderCreate(props) {
   const createForm = useRef();
@@ -25,8 +28,21 @@ export default function DashboardOrderCreate(props) {
   const [chooseUser, setChooseUser] = useState(false);
   const order = props.order;
 
+  const getListOrder = async () => {
+    let data;
+    const item = order.orderList;
+    let listProduct = [];
+    for (let i in item) {
+      data = await getProductById(item[i].id);
+      data.data.count = item[i].amount;
+      listProduct.push(data.data);
+    }
+    setProductList(listProduct);
+  };
+
   useEffect(() => {
     if (chooseUser === false) {
+      let data = [];
       axios.get(`http://pe.heromc.net:4000/vietnam`).then((res) => {
         setTinh(res.data[0].tinh);
         setHuyen(res.data[0].huyen);
@@ -38,18 +54,6 @@ export default function DashboardOrderCreate(props) {
           setOrderProvince(order.orderTinh);
           setOrderDistric(order.orderHuyen);
           setOrderPaymentMethod(order.orderPaymentMethod);
-          if (typeof order.orderList !== "undefined") {
-            order.orderList.map((item) => {
-              axios
-                .get(`http://pe.heromc.net:4000/products/${item.id}`)
-                .then((res) => {
-                  res.data.count = item.amount;
-                  setProductList((productList) => [...productList, res.data]);
-                });
-              return null;
-            });
-            return;
-          }
           setOrderPaymentMethod(order.orderPaymentMethod);
           if (order.orderTinh !== "") {
             res.data[0].tinh.filter((item) => {
@@ -66,7 +70,8 @@ export default function DashboardOrderCreate(props) {
         }
       });
     }
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getListOrder();
+    getProducts().then((res) => {
       setProduct(res.data);
     });
     axios.get(`http://pe.heromc.net:4000/users/list`).then((res) => {
@@ -108,23 +113,21 @@ export default function DashboardOrderCreate(props) {
       total += productList[i].productFinalPrice * productList[i].count;
       listOrder.push(data);
     }
-    axios
-      .post(`http://pe.heromc.net:4000/order/update/${order._id}`, {
-        orderName: orderName,
-        orderEmail: orderEmail,
-        orderPhone: orderPhone,
-        orderAddress: orderAddress,
-        orderTinh: orderProvince,
-        orderHuyen: orderDistric,
-        orderList: listOrder,
-        orderTotal: total,
-        orderPaymentMethod: orderPaymentMethod,
-        orderDate: new Date(),
-      })
-      .then(() => {
-        props.setCloseEditFunc(false);
-        props.setToastFunc(true);
-      });
+    updateOrder(order._id, {
+      orderName: orderName,
+      orderEmail: orderEmail,
+      orderPhone: orderPhone,
+      orderAddress: orderAddress,
+      orderTinh: orderProvince,
+      orderHuyen: orderDistric,
+      orderList: listOrder,
+      orderTotal: total,
+      orderPaymentMethod: orderPaymentMethod,
+      updatedAt: Date.now(),
+    }).then(() => {
+      props.setCloseEditFunc(false);
+      props.setToastFunc(true);
+    });
   };
 
   return (

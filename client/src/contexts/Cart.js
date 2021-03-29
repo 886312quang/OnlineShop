@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export const CartContext = React.createContext();
 
-export  function CartProvider(props) {
+export function CartProvider(props) {
   const [cartItems, setCartItems] = useState([]);
   const [wishListItems, setWishListItems] = useState([]);
   const [clickedCart, setClickedCart] = useState(0);
@@ -99,6 +99,13 @@ export  function CartProvider(props) {
     getTotal(virtualCart);
   };
 
+  const createOrderContext = () => {
+    localStorage.removeItem("total");
+    localStorage.removeItem("cart");
+    setCartItems([]);
+    setTotal(0);
+  };
+
   const removeFromWishList = (event) => {
     const id = event.target.id;
     const virtualCart = [...wishListItems];
@@ -177,6 +184,7 @@ export  function CartProvider(props) {
         removeFromWishList,
         updateCount,
         total,
+        createOrderContext,
       }}
     >
       {props.children}

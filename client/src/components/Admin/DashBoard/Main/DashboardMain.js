@@ -18,6 +18,9 @@ import DashboardChart from "./DashboardChart";
 import DashboardRecentReview from "./DashboardRecentReview";
 import DashboardChartLine from "./DashboardChartLine";
 import DashboardTodoList from "./DashboardTodoList";
+import { getProducts } from "../../../../services/products";
+import { getOrder } from "../../../../services/order";
+import { getUser } from "../../../../services/user";
 
 export default function DashboardMain(props) {
   const [products, setProducts] = useState([]);
@@ -33,10 +36,10 @@ export default function DashboardMain(props) {
   const [incomeMonthPercent, setIncomeMonthPercent] = useState({});
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getProducts().then((res) => {
       setProducts(res.data);
       let virtualProducts = [...res.data];
-      virtualProducts.sort((a, b) => a.productSold - b.productSold);
+      virtualProducts.sort((a, b) => b.productSold - a.productSold);
       let virtualProducts2 = [];
       for (let i in virtualProducts) {
         let data = {
@@ -47,13 +50,13 @@ export default function DashboardMain(props) {
       }
       setTopProductSales(virtualProducts2);
     });
-    axios.get(`http://pe.heromc.net:4000/users/list`).then((res) => {
+    getUser().then((res) => {
       setUser(res.data);
     });
     axios.get(`http://pe.heromc.net:4000/email`).then((res) => {
       setEmail(res.data);
     });
-    axios.get(`http://pe.heromc.net:4000/order`).then((res) => {
+    getOrder().then((res) => {
       setOrder(res.data);
       const topCustomer2 = Object.values(
         res.data.reduce(

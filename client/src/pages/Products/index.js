@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import Newsletter from "../../components/Layout/Newsletter/Newsletter";
+import React, { useEffect, useRef, useState } from "react";
 import Footer from "../../components/Layout/Footer/Footer";
 import Header from "../../components/Layout/Header/HeaderV2";
+import Newsletter from "../../components/Layout/Newsletter/Newsletter";
 import ProductMain from "../../components/Product/ProductMain";
 import ProductRecommend from "../../components/Product/ProductRecommend";
 import ProductReview from "../../components/Product/ProductReview";
-import axios from "axios";
 import { getProductById } from "../../services/products";
 
 export default function Product(props) {

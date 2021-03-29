@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
-var cateSchema = new mongoose.Schema(
+let noticeSchema = new mongoose.Schema(
   {
-    cateName: String,
+    noticeContent: String,
+    isRead: String,
+    noticeTime: Date,
     createdAt: { type: Number, default: Date.now },
     updatedAt: { type: Number, default: null },
     deletedAt: { type: Number, default: null },
@@ -12,6 +14,6 @@ var cateSchema = new mongoose.Schema(
   },
 );
 
-var Category = mongoose.model("Category", cateSchema, "category");
+let Notice = mongoose.model("Notice", noticeSchema, "notice");
 
-module.exports = Category;
+module.exports = Notice;

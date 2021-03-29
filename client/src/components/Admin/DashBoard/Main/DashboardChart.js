@@ -32,18 +32,19 @@ export default function DashboardChart(props) {
       for (let i in topCate) {
         topCateList.push(topCate[i].productCate);
       }
+
+      const data = [];
+
+      for (let i in topCate) {
+        data.push(topCate[i].count);
+      }
+
       setData({
         labels: topCateList,
         datasets: [
           {
             label: "",
-            data: [
-              topCate[0].count,
-              topCate[1].count,
-              topCate[2].count,
-              topCate[3].count,
-              topCate[4].count,
-            ],
+            data: data,
             backgroundColor: [
               "rgba(255, 99, 132, 0.8)",
               "rgba(54, 162, 235, 0.8)",
@@ -104,7 +105,6 @@ export default function DashboardChart(props) {
         <div className="top-location-content flex">
           <div className="top-location-map" style={{ margin: "0" }}>
             <Bar data={data} options={options} />
-            {/* <Line data={data} options={options} /> */}
           </div>
         </div>
         <div className="count-line"></div>

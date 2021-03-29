@@ -14,7 +14,6 @@ export default function FashionNews(props) {
   useEffect(() => {
     fetchGetNews().then((res) => {
       setNews(res.data);
-      console.log(res.data);
     });
   }, []);
 
