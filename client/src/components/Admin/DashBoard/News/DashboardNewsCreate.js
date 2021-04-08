@@ -44,7 +44,7 @@ export default function DashboardNewsCreate(props) {
     formData.append("newCate", cateValue);
     formData.append("newTitle", inputValue.title);
     formData.append("newContent", newsContent);
-
+    console.log(formData);
     postNews(formData).then(() => {
       props.setCloseCreateFunc(false);
       props.setToastFunc(true);

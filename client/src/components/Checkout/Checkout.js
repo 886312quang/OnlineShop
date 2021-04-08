@@ -68,7 +68,7 @@ function Checkout(props) {
 
   useEffect(() => {
     if (userInfo) {
-      setUserAvt(userInfo.userAvt);
+      setUserAvt(userInfo.avatar);
       set_Id(userInfo._id);
       setNameInput(userInfo.userName);
       setEmailInput(userInfo.email);

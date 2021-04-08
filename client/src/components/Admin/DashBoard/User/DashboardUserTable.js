@@ -4,6 +4,7 @@ import axios from "axios";
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import "../../../../App.css";
+import { deleteUserById, getUser } from "../../../../services/user";
 import "../../../Styles/Dashboard.css";
 
 export default function DashboardUserTable(props) {
@@ -12,7 +13,7 @@ export default function DashboardUserTable(props) {
   const [constUser, setConstUser] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/users/list`).then((res) => {
+    getUser().then((res) => {
       setUser(res.data);
       setConstUser(res.data);
     });
@@ -96,9 +97,7 @@ export default function DashboardUserTable(props) {
   }
 
   const deleteOnClick = (event) => {
-    axios.post(`http://pe.heromc.net:4000/users/delete/:${event.target.id}`, {
-      id: event.target.id,
-    });
+    deleteUserById(event.target.id);
     setUser(
       user.filter((item) => {
         return item._id !== event.target.id;
@@ -197,7 +196,7 @@ export default function DashboardUserTable(props) {
                     <td style={{ display: "flex" }}>
                       <img
                         className="table-mobile-useravt"
-                        src={item.userAvt}
+                        src={item.avatar}
                         width="70px"
                         height="80px"
                         style={{ padding: "5px 0", borderRadius: "50%" }}
@@ -208,14 +207,14 @@ export default function DashboardUserTable(props) {
                       <p>{item.userName}</p>
                     </td>
                     <td className="table-mobile-useremail">
-                      <p>{item.userEmail}</p>
+                      <p>{item.email}</p>
                     </td>
                     <td className="table-mobile-userphone">
-                      <p>{item.userPhone}</p>
+                      <p>{item.phone}</p>
                     </td>
                     <td className="table-mobile-useraddress">
                       <p>
-                        {item.userAddress}, {item.userHuyen}, {item.userTinh}
+                        {item.address}, {item.userHuyen}, {item.userTinh}
                       </p>
                     </td>
                     <td>
