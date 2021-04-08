@@ -26,6 +26,8 @@ let UserSchema = new Schema({
     minlength: 6,
     maxlength: 128,
   },
+  huyen: { type: String, default: null },
+  tinh: { type: String, default: null },
   createdAt: { type: Number, default: Date.now },
   updatedAt: { type: Number, default: null },
   deletedAt: { type: Number, default: null },
@@ -171,7 +173,18 @@ UserSchema.methods = {
   },
   transform() {
     const transformed = {};
-    const fields = ["_id", "userName", "avatar", "createdAt", "email", "role", "phone", "address"];
+    const fields = [
+      "_id",
+      "userName",
+      "avatar",
+      "createdAt",
+      "email",
+      "role",
+      "phone",
+      "address",
+      "tinh",
+      "huyen",
+    ];
 
     fields.forEach((field) => {
       transformed[field] = this[field];

@@ -40,7 +40,11 @@ function Auth(props) {
         })
         .catch((err) => {});
     } else {
-      fetchSignup(user.registerName, user.registerPassword, user.registerEmail)
+      fetchSignup({
+        userName: user.registerName,
+        email: user.registerEmail,
+        password: user.registerPassword,
+      })
         .then((res) => {
           setArrSuccess((arrSuccess) => [...arrSuccess, res.data]);
           setTimeout(() => {

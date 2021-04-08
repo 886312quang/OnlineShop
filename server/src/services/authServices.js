@@ -5,7 +5,7 @@ const { transErrors, transSuccess, transMail } = require("../../../lang/vi");
 
 let saltRounds = 7;
 
-let register = (email, password, userName) => {
+let register = (email, password, userName, role) => {
   return new Promise(async (resolve, reject) => {
     let userByEmail = await UserModel.findByEmail(email);
     if (userByEmail) {
@@ -19,6 +19,7 @@ let register = (email, password, userName) => {
       userName: userName,
       email: email,
       password: bcrypt.hashSync(password, salt),
+      role: role,
     };
     let user = await UserModel.createNew(userItem);
 

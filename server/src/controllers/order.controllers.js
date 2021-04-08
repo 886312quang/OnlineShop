@@ -53,8 +53,6 @@ let updateOrder = async (req, res) => {
         deleteOrder.push(oldOrder.orderList[i]);
       }
     }
-    console.log(orderList);
-    console.log(deleteOrder);
 
     for (let i in orderList) {
       await Product.findByIdAndUpdate(orderList[i].id, {
@@ -114,12 +112,9 @@ let createOrder = async (req, res) => {
 
 let getOrderByUser = async (req, res) => {
   try {
-    console.log(req.params);
-
     const email = req.params.email;
 
     const order = await Order.find({ orderEmail: email });
-    console.log(order);
     return res.status(200).json(order);
   } catch (error) {
     return res.status(500).json(error);

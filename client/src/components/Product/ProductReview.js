@@ -18,7 +18,7 @@ export default function ProductReview(props) {
   useEffect(() => {
     if (userInfo) {
       setNameInput(userInfo.userName);
-      setEmailInput(userInfo.userEmail);
+      setEmailInput(userInfo.email);
     }
     if (props.product) {
       setProduct(props.product);
@@ -47,7 +47,7 @@ export default function ProductReview(props) {
         ratingText: reviewInput,
         ratingEmail: emailInput,
         ratingStar: ratingValue,
-        ratingAvt: userInfo.userAvt,
+        ratingAvt: userInfo.avatar,
       };
       createReview(data, product._id);
       setProductVote((productVote) => [...productVote, data]);

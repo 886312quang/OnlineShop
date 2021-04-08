@@ -24,6 +24,8 @@ const refreshTokenSecret =
 let register = async (req, res) => {
   let errorArr = [];
   let successArr = [];
+  console.log(req.body)
+
   let validationErr = validationResult(req);
   if (!validationErr.isEmpty()) {
     let errors = Object.values(validationErr.mapped());
@@ -31,16 +33,17 @@ let register = async (req, res) => {
       errorArr.push(item.msg);
     });
 
-    return res.status(401).send({ success: false, message: errorArr });
+    return res.status(401).send({ success: false });
   }
   try {
     let createUserSuccess = await auth.register(
       req.body.email,
       req.body.password,
       req.body.userName,
+      req.body.role,
     );
     successArr.push(createUserSuccess);
-    return res.status(200).json({ success: true, message: successArr });
+    return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json(error);
   }

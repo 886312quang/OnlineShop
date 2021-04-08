@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { fetchSignup } from "../../../../services/auth";
 
 export default function DashboardUserCreate(props) {
   const createForm = useRef();
@@ -13,19 +14,13 @@ export default function DashboardUserCreate(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    const formData = new FormData();
 
-    formData.append("userName", userName);
-    formData.append("userEmail", userEmail);
-    formData.append("userPassword", userPassword);
-    formData.append("userRole", userRole);
-
-    axios.post("http://pe.heromc.net:4000/users/register", formData, config);
+    fetchSignup({
+      userName: userName,
+      email: userEmail,
+      password: userPassword,
+      role: userRole,
+    });
     props.setCloseCreateFunc(false);
     props.setToastFunc(true);
   };

@@ -27,6 +27,7 @@ import DashboardLiveChat from "../LiveChat/DashboardLiveChat";
 import { getNewsById } from "../../../services/news";
 import { getProductById } from "../../../services/products";
 import { getOrderById } from "../../../services/order";
+import { fetchGetUser } from "../../../services/user";
 
 export default function DashboardBody(props) {
   const tabId = props.tabId;
@@ -59,7 +60,7 @@ export default function DashboardBody(props) {
     getNewsById(props.productId).then((res) => {
       setNews(res.data);
     });
-    Axios.get(`http://pe.heromc.net:4000/users/list/${props.productId}`).then(
+    fetchGetUser(props.productId).then(
       (res) => {
         setUser(res.data);
       },

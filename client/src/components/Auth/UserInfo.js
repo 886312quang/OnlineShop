@@ -1,12 +1,13 @@
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import { UserContext } from "../../contexts/User";
 import "../../App.css";
 import "../Styles/Account.css";
 import { getOrder, getOrderByUser } from "../../services/order";
+import { updateUser } from "../../services/user";
 
 function AccountInfo(props) {
   const [tinh, setTinh] = useState([]);
@@ -27,6 +28,8 @@ function AccountInfo(props) {
 
   const { userInfo, setUserInfoFunc } = useContext(UserContext);
 
+  const createForm = useRef();
+
   useEffect(() => {
     if (userInfo) {
       setUserName(userInfo.userName);
@@ -34,7 +37,7 @@ function AccountInfo(props) {
       setUserPhone(userInfo.phone);
       setUserAvt(userInfo.avatar);
       setUserAddress(userInfo.address);
-      if (userInfo.userTinh !== "") {
+      if (userInfo.tinh !== "") {
         axios.get(`http://pe.heromc.net:4000/vietnam`).then((res) => {
           setTinh(res.data[0].tinh);
           setHuyen(res.data[0].huyen);
@@ -45,15 +48,15 @@ function AccountInfo(props) {
             return null;
           });
         });
-        setUserTinh(userInfo.userTinh);
+        setUserTinh(userInfo.tinh);
       } else {
         axios.get(`http://pe.heromc.net:4000/vietnam`).then((res) => {
           setTinh(res.data[0].tinh);
           setHuyen(res.data[0].huyen);
         });
       }
-      if (userInfo.userHuyen !== "") {
-        setUserHuyen(userInfo.userHuyen);
+      if (userInfo.huyen !== "") {
+        setUserHuyen(userInfo.huyen);
       }
       getOrderByUser(userInfo.email).then((res) => {
         const orderList2 = [];
@@ -65,39 +68,36 @@ function AccountInfo(props) {
     }
   }, [userInfo]);
 
-  const submitInfo = (event) => {
+  const logout = () => {
+    localStorage.removeItem("user-id");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refresh-token");
+    localStorage.removeItem("exp");
+    localStorage.removeItem("iat");
+    sessionStorage.removeItem("chat-id");
+    window.location.reload(false);
+    localStorage.removeItem("total");
+    localStorage.removeItem("cart");
+  };
+
+  const onSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
+
     const formData = new FormData();
     const imageArr = Array.from(file);
     imageArr.forEach((image) => {
-      formData.append("userAvt", image);
+      formData.append("avatar", image);
     });
     formData.append("userName", userName);
-    formData.append("userEmail", userEmail);
-    formData.append("userPassword", userPassword);
-    formData.append("userPhone", userPhone);
-    formData.append("userTinh", userTinh);
-    formData.append("userHuyen", userHuyen);
-    formData.append("userAddress", userAddress);
-    localStorage.removeItem("token");
-    axios
-      .post(
-        `http://pe.heromc.net:4000/users/update/${userInfo._id}`,
-        formData,
-        config,
-      )
-      .then((res) => {
-        setUserInfoFunc(res.data.user);
-        localStorage.setItem("token", res.data.token);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+    formData.append("email", userEmail);
+    formData.append("phone", userPhone);
+    formData.append("tinh", userTinh);
+    formData.append("huyen", userHuyen);
+    formData.append("address", userAddress);
+
+    updateUser(userInfo._id, formData).then((res) => {
+      logout();
+    });
 
     setToast(true);
     setTimeout(() => {
@@ -120,7 +120,7 @@ function AccountInfo(props) {
             <img
               style={{ borderRadius: "50%" }}
               className="accountinfo-avt-img"
-              src={userInfo.userAvt}
+              src={userInfo.avatar}
               alt=""
               width="48px"
               height="48px"
@@ -155,15 +155,7 @@ function AccountInfo(props) {
                   : "accountinfo-menu-item flex"
               }
               onClick={() => {
-                localStorage.removeItem("user-id");
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refresh-token");
-                localStorage.removeItem("exp");
-                localStorage.removeItem("iat");
-                sessionStorage.removeItem("chat-id");
-                window.location.reload(false);
-                localStorage.removeItem("total");
-                localStorage.removeItem("cart");
+                logout();
               }}
             >
               Log out
@@ -177,7 +169,11 @@ function AccountInfo(props) {
               <p>Manage account information for account security</p>
             </div>
             <div className="accountinfo-body flex">
-              <form onSubmit={submitInfo} encType="multipart/form-data">
+              <form
+                onSubmit={onSubmit}
+                encType="multipart/form-data"
+                ref={createForm}
+              >
                 <div className="create-box-row account-box-row flex">
                   <div className="dashboard-left create-box-left flex">
                     Name
@@ -241,6 +237,7 @@ function AccountInfo(props) {
                       onChange={(event) => {
                         setUserEmail(event.target.value);
                       }}
+                      disabled="true"
                     ></input>
                   </div>
                 </div>
@@ -300,16 +297,20 @@ function AccountInfo(props) {
                       <option defaultValue disabled>
                         select a district
                       </option>
-                      {huyen.map((item, index) => {
-                        if (item.tinh_id === provinceId) {
-                          return (
-                            <option key={index} value={item.name}>
-                              {item.name}
-                            </option>
-                          );
-                        }
-                        return null;
-                      })}
+                      {provinceId ? (
+                        huyen.map((item, index) => {
+                          if (item.tinh_id === provinceId) {
+                            return (
+                              <option key={index} value={item.name}>
+                                {item.name}
+                              </option>
+                            );
+                          }
+                          return null;
+                        })
+                      ) : (
+                        <option key={userHuyen}>{userHuyen}</option>
+                      )}
                     </select>
                   </div>
                 </div>
@@ -325,22 +326,6 @@ function AccountInfo(props) {
                       value={userAddress || ""}
                       onChange={(event) => {
                         setUserAddress(event.target.value);
-                      }}
-                    ></input>
-                  </div>
-                </div>
-                <div className="create-box-row account-box-row flex">
-                  <div className="dashboard-left create-box-left flex">
-                    New password
-                  </div>
-                  <div className="dashboard-right create-box-right">
-                    <input
-                      type="password"
-                      className="input"
-                      name="email"
-                      value={userPassword}
-                      onChange={(event) => {
-                        setUserPassword(event.target.value);
                       }}
                     ></input>
                   </div>
@@ -401,7 +386,7 @@ function AccountInfo(props) {
                                 WebkitLineClamp: "3",
                               }}
                             >
-                              {item.orderAddress}, {item.orderHuyen} {" "}
+                              {item.orderAddress}, {item.orderHuyen}{" "}
                               {item.orderTinh}
                             </p>
                           </div>
