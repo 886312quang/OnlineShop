@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
 import b1 from "../../assets/b1.jpg";
-import b2 from "../../assets/b2.jpg";
-import b3 from "../../assets/b3.jpg";
-import b4 from "../../assets/b4.jpg";
+import b2 from "../../assets/phone.jpg";
+import b3 from "../../assets/mac.jpg";
+import b4 from "../../assets/Accessories.jpg";
 
 export default function RecommendBanner() {
   const handleClick = () => {
@@ -34,11 +34,11 @@ export default function RecommendBanner() {
             <div className="banner-top2 img-hover">
               <img src={b2} alt="banner" width="100%" height="100%"></img>
               <div className="blackbox-center-container">
-                <div className="blackbox-title blackbox-title-small">Woman</div>
+                <div className="blackbox-title blackbox-title-small">Phone</div>
                 <div className="blackbox-center">
                   <Link
                     className="blackbox-link blackbox-link-smaill a"
-                    to="/women"
+                    to="/phone"
                     onClick={handleClick}
                   >
                     Shop now
@@ -49,11 +49,13 @@ export default function RecommendBanner() {
             <div className="banner-top2 img-hover">
               <img src={b3} alt="banner" width="100%" height="100%"></img>
               <div className="blackbox-center-container">
-                <div className="blackbox-title blackbox-title-small">Man</div>
+                <div className="blackbox-title blackbox-title-small">
+                  Laptop
+                </div>
                 <div className="blackbox-center">
                   <Link
                     className="blackbox-link blackbox-link-smaill a"
-                    to="/men"
+                    to="/laptop"
                     onClick={handleClick}
                   >
                     Shop now
@@ -66,7 +68,7 @@ export default function RecommendBanner() {
             <img src={b4} alt="banner" width="100%" height="100%"></img>
             <div className="blackbox-center-container">
               <div className="blackbox-title blackbox-title-medium">
-                Free Shipping On All Orders
+                Accessories
               </div>
               <div className="blackbox-center">
                 <Link

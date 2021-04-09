@@ -11,13 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../../../contexts/User";
 import { CartContext } from "../../../contexts/Cart";
-import axios from "axios";
 import Div100vh from "react-div-100vh";
 import MenuItemDropdown from "../../Menu/MenuItemDropdown";
 import Search from "../../Search/index";
 import Auth from "../../Auth/Auth";
 import "../../../App.css";
 import Cart from "../../Cart/Cart";
+import { getProducts } from "../../../services/products";
+import logo from "../../../assets/logo1-1.png";
 
 const Header = (props) => {
   //Context
@@ -77,14 +78,14 @@ const Header = (props) => {
       },
       {
         id: "2",
-        label: "Women",
-        url: "/women",
+        label: "Phone",
+        url: "/phone",
         dropdownContent: [],
       },
       {
         id: "3",
-        label: "Men",
-        url: "/men",
+        label: "Laptop",
+        url: "/laptop",
         dropdownContent: [],
       },
       {
@@ -101,34 +102,34 @@ const Header = (props) => {
       },
     ];
 
-    axios.get(`http://pe.heromc.net:4000/products`).then((res) => {
+    getProducts().then((res) => {
       let virtualNavBar = [...navBar];
-      const menProduct = [];
-      const womenProduct = [];
+      const phoneProduct = [];
+      const laptopProduct = [];
       for (let i in res.data) {
-        if (res.data[i].productSex === "Man") {
-          menProduct.push(res.data[i].productGroupCate);
+        if (res.data[i].productType === "Phone") {
+          phoneProduct.push(res.data[i].productGroupCate);
         }
-        if (res.data[i].productSex === "Woman") {
-          womenProduct.push(res.data[i].productGroupCate);
+        if (res.data[i].productType === "Laptop") {
+          laptopProduct.push(res.data[i].productGroupCate);
         }
       }
-      let groupCateMen = menProduct.filter(function (elem, index, self) {
+      let groupCatePhone = phoneProduct.filter(function (elem, index, self) {
         return index === self.indexOf(elem);
       });
 
-      let groupCateWomen = womenProduct.filter(function (elem, index, self) {
+      let groupCateLaptop = laptopProduct.filter(function (elem, index, self) {
         return index === self.indexOf(elem);
       });
 
-      let menDropdownContent = [];
-      for (let i in groupCateMen) {
-        let menData = {};
+      let phoneDropdownContent = [];
+      for (let i in groupCatePhone) {
+        let phoneData = {};
         let cateList = [];
         for (let j in res.data) {
           if (
-            res.data[j].productGroupCate === groupCateMen[i] &&
-            res.data[j].productSex === "Man"
+            res.data[j].productGroupCate === groupCatePhone[i] &&
+            res.data[j].productType === "Phone"
           ) {
             cateList.push(res.data[j].productCate);
           }
@@ -137,21 +138,21 @@ const Header = (props) => {
           return index === self.indexOf(elem);
         });
         // console.log(cateList)
-        menData = {
-          dropdownTitle: groupCateMen[i],
+        phoneData = {
+          dropdownTitle: groupCatePhone[i],
           dropdownList: cateList2,
         };
-        menDropdownContent.push(menData);
+        phoneDropdownContent.push(phoneData);
       }
 
-      let womenDropdownContent = [];
-      for (let i in groupCateWomen) {
-        let womenData = {};
+      let laptopDropdownContent = [];
+      for (let i in groupCateLaptop) {
+        let laptopData = {};
         let cateList = [];
         for (let j in res.data) {
           if (
-            res.data[j].productGroupCate === groupCateWomen[i] &&
-            res.data[j].productSex === "Woman"
+            res.data[j].productGroupCate === groupCateLaptop[i] &&
+            res.data[j].productType === "Laptop"
           ) {
             cateList.push(res.data[j].productCate);
           }
@@ -159,18 +160,18 @@ const Header = (props) => {
         let cateList2 = cateList.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
-        womenData = {
-          dropdownTitle: groupCateWomen[i],
+        laptopData = {
+          dropdownTitle: groupCateLaptop[i],
           dropdownList: cateList2,
         };
-        womenDropdownContent.push(womenData);
+        laptopDropdownContent.push(laptopData);
       }
       for (let i in virtualNavBar) {
-        if (virtualNavBar[i].label === "Men") {
-          virtualNavBar[i].dropdownContent = menDropdownContent;
+        if (virtualNavBar[i].label === "Phone") {
+          virtualNavBar[i].dropdownContent = phoneDropdownContent;
         }
-        if (virtualNavBar[i].label === "Women") {
-          virtualNavBar[i].dropdownContent = womenDropdownContent;
+        if (virtualNavBar[i].label === "Laptop") {
+          virtualNavBar[i].dropdownContent = laptopDropdownContent;
         }
       }
       setNavBar(virtualNavBar);
@@ -512,12 +513,12 @@ const Header = (props) => {
         <Link to="/">
           {whiteText === true ? (
             <img
-              src="https://demo.uix.store/sober/wp-content/themes/sober/images/logo-light.svg"
+              src={logo}
               alt="logo"
             ></img>
           ) : (
             <img
-              src="https://demo.uix.store/sober/wp-content/themes/sober/images/logo.svg"
+              src={logo}
               alt="logo"
             ></img>
           )}

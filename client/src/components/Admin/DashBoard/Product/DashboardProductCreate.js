@@ -20,7 +20,7 @@ export default function DashboardProductCreate(props) {
   const [cate, setCate] = useState([]);
   const [cateValue, setCateValue] = useState("");
   const [size, setSize] = useState([]);
-  const [sex, setSex] = useState("");
+  const [type, setType] = useState("");
   const [file, setFile] = useState([]);
   const [productGroupCate, setProductGroupCate] = useState("");
   const [productGroupCateList, setProductGroupCateList] = useState([]);
@@ -95,7 +95,7 @@ export default function DashboardProductCreate(props) {
     formData.append("productGroupCate", productGroupCate);
     formData.append("productSize", size);
     formData.append("productDes", inputValue.des);
-    formData.append("productSex", sex);
+    formData.append("productType", type);
     formData.append("productDate", new Date());
 
     create(formData).then(() => {
@@ -326,19 +326,19 @@ export default function DashboardProductCreate(props) {
             </div>
           </div>
           <div className="create-box-row flex">
-            <div className="dashboard-left flex">Sex </div>
+            <div className="dashboard-left flex">Type </div>
             <div className="dashboard-right flex">
               <select
                 style={{ width: "200px" }}
                 onChange={(event) => {
-                  setSex(event.target.value);
+                  setType(event.target.value);
                 }}
-                value={sex}
+                value={type}
                 required
               >
                 <option></option>
-                <option>Man</option>
-                <option>Woman</option>
+                <option>Phone</option>
+                <option>Laptop</option>
               </select>
             </div>
           </div>

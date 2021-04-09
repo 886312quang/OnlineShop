@@ -56,7 +56,7 @@ export default function FashionNews(props) {
   return (
     <div className="FashionNews">
       <div className="news-container">
-        <div className="news-title">Fashion News</div>
+        <div className="news-title">Tech News</div>
         <div className="news-box">
           {currentNews.map(function (item, index) {
             return <News news={item} key={index} />;

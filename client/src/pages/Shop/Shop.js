@@ -5,15 +5,14 @@ import Footer from "../../components/Layout/Footer/Footer";
 import BannerV2 from "../../components/Banner/BannerV2";
 import Header from "../../components/Layout/Header/Header";
 import ShopMain from "../../components/Shop/ShopMain";
-import bg from "../../assets/S3.jpg";
-import axios from "axios";
+import bg from "../../assets/b1.jpg";
 import { withRouter } from "react-router-dom";
 import { getProducts } from "../../services/products";
 
 function Shop(props) {
   const [products, setProducts] = useState([]);
   const [sortedCate, setSortedCate] = useState([]);
-  let sex = props.location.pathname.split("/")[1];
+  let type = props.location.pathname.split("/")[1];
   let cate = props.location.pathname.split("/")[2];
 
   useEffect(() => {
@@ -22,9 +21,10 @@ function Shop(props) {
   }, []);
 
   useEffect(() => {
-    if (sex === "shop") {
+    if (type === "shop") {
       getProducts().then((res) => {
         const virtualCate = [...res.data];
+        console.log(res.data)
         //Get all category
         const sortedcate = Object.values(
           virtualCate.reduce((a, { productCate }) => {
@@ -52,16 +52,16 @@ function Shop(props) {
         setProducts(virtualData);
       });
     } else {
-      sex.toLowerCase() === "men" ? (sex = "man") : (sex = "woman");
+      type.toLowerCase() === "phone" ? (type = "phone") : (type = "laptop");
       getProducts().then((res) => {
         const virtualCate = [];
         for (let i in res.data) {
-          if (sex === "woman") {
-            if (res.data[i].productSex === "Woman") {
+          if (type === "laptop") {
+            if (res.data[i].productType === "Laptop") {
               virtualCate.push(res.data[i]);
             }
           } else {
-            if (res.data[i].productSex === "Man") {
+            if (res.data[i].productType === "Phone") {
               virtualCate.push(res.data[i]);
             }
           }
@@ -81,12 +81,12 @@ function Shop(props) {
         const virtualData = [];
         for (let i in res.data) {
           if (!cate) {
-            if (res.data[i].productSex.toLowerCase() === sex) {
+            if (res.data[i].productType.toLowerCase() === type) {
               virtualData.push(res.data[i]);
             }
           } else {
             if (
-              res.data[i].productSex.toLowerCase() === sex &&
+              res.data[i].productType.toLowerCase() === type &&
               cate &&
               res.data[i].productGroupCate
                 .toLowerCase()
@@ -95,7 +95,7 @@ function Shop(props) {
             ) {
               virtualData.push(res.data[i]);
             } else if (
-              res.data[i].productSex.toLowerCase() === sex &&
+              res.data[i].productType.toLowerCase() === type &&
               cate &&
               res.data[i].productCate.toLowerCase().split(" ").join("-") ===
                 cate
@@ -107,12 +107,12 @@ function Shop(props) {
         setProducts(virtualData);
       });
     }
-  }, [sex, cate]);
+  }, [type, cate]);
 
   return (
     <div className="Men">
       <Header />
-      <BannerV2 bannerImage={bg} position={"120px"} />
+      <BannerV2 bannerImage={bg}  />
       <ShopMain products={products} sortedCate={sortedCate} />
       <Newsletter />
       <Footer />
