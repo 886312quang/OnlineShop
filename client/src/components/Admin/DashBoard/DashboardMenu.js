@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import logo from "../../../assets/logo1-1.png";
 
 export default function DashboardMenu(props) {
   const [openUserOpt, setOpenUserOpt] = useState(false);
@@ -55,9 +56,10 @@ export default function DashboardMenu(props) {
            <Link to="/">
            <img
               alt=""
-              src="https://demo.uix.store/sober/wp-content/themes/sober/images/logo-light.svg"
-              height="24px"
-              style={{ marginLeft: "27px" }}
+              src={logo}
+              height="28px"
+              width="40px"
+              style={{ marginLeft: "77px" }}
             ></img>
             </Link>
           )}

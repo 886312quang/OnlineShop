@@ -101,7 +101,7 @@ let updateProduct = async (req, res) => {
       productCate: req.body.productCate,
       productGroupCate: req.body.productGroupCate,
       productSize: req.body.productSize.split(","),
-      productSex: req.body.productSex,
+      productType: req.body.productType,
       productDes: req.body.productDes,
     };
 

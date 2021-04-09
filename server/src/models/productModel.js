@@ -14,7 +14,7 @@ var productSchema = new mongoose.Schema(
     productGroupCate: String,
     productColor: String,
     productSize: Array,
-    productSex: String,
+    productType: String,
     productSold: Number,
     productDes: String,
     productVote: Array,

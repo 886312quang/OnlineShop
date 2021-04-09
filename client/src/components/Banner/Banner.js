@@ -41,7 +41,7 @@ const Banner = (props) => {
                 currentBanner === 1 ? "banner-title fadeInDown" : "banner-title"
               }
             >
-              New Arrivals
+              Technology
             </div>
           </div>
           {collection && collection.length > 0 && (

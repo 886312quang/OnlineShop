@@ -346,7 +346,7 @@
   background-position: center;
   height: 100%;
   width: 100%;
-  background-image: url(./assets/S1.jpg);
+  background-image: url(./assets/b1.jpg);
   transition: 1s;
   flex-direction: column;
 }
@@ -358,7 +358,7 @@
   background-position: center;
   height: 100%;
   width: 100%;
-  background-image: url(./assets/S2.jpg);
+  background-image: url(./assets/b2.jpg);
   transition: 1s;
   flex-direction: column;
   align-items: flex-start;
@@ -373,7 +373,7 @@
   background-position: center;
   height: 100%;
   width: 100%;
-  background-image: url(./assets/S3.jpg);
+  background-image: url(./assets/b3.jpg);
   transition: 1s;
   flex-direction: column;
 }

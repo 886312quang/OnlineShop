@@ -29,7 +29,7 @@ export default function DashboardProductEdit(props) {
   const [productGroupCate, setProductGroupCate] = useState("");
   const [productGroupCateList, setProductGroupCateList] = useState([]);
   const [productSize, setProductSize] = useState([]);
-  const [productSex, setProductSex] = useState([]);
+  const [productType, setProductType] = useState([]);
 
   const product = props.product;
 
@@ -84,7 +84,7 @@ export default function DashboardProductEdit(props) {
       setProductPrice(product.productPrice);
       setProductDes(product.productDes);
       setProductCate(product.productCate);
-      setProductSex(product.productSex);
+      setProductType(product.productType);
       setProductSize(product.productSize);
       setProductGroupCate(product.productGroupCate);
       getCategory().then((res) => {
@@ -111,11 +111,6 @@ export default function DashboardProductEdit(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
 
     const formData = new FormData();
 
@@ -131,7 +126,7 @@ export default function DashboardProductEdit(props) {
     formData.append("productGroupCate", productGroupCate);
     formData.append("productSize", productSize);
     formData.append("productDes", productDes);
-    formData.append("productSex", productSex);
+    formData.append("productType", productType);
     formData.append("productDate", new Date());
     updateProduct(formData, product._id)
       .then(() => {
@@ -383,19 +378,19 @@ export default function DashboardProductEdit(props) {
               </div>
             </div>
             <div className="create-box-row flex">
-              <div className="dashboard-left flex">Sex </div>
+              <div className="dashboard-left flex">Type </div>
               <div className="dashboard-right flex">
                 <select
                   style={{ width: "200px" }}
                   onChange={(event) => {
-                    setProductSex(event.target.value);
+                    setProductType(event.target.value);
                   }}
-                  value={productSex}
+                  value={productType}
                   required
                 >
                   <option></option>
-                  <option>Man</option>
-                  <option>Woman</option>
+                  <option>Phone</option>
+                  <option>Laptop</option>
                 </select>
               </div>
             </div>
