@@ -9,6 +9,8 @@ const Product = (props) => {
   const [view, setView] = useState(false);
   const product = props.product;
 
+  console.log(props.parentHeight)
+
   const closeView = (event) => {
     document.body.style.overflow = "unset";
     setView(false);

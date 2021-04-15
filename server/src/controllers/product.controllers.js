@@ -41,6 +41,7 @@ let createProduct = async (req, res) => {
       productImg: imgArr,
       productDes: req.body.productDes,
       productSold: 0,
+      productType: req.body.productType,
     };
 
     await Products.create(data);

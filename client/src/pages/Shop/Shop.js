@@ -24,7 +24,7 @@ function Shop(props) {
     if (type === "shop") {
       getProducts().then((res) => {
         const virtualCate = [...res.data];
-        console.log(res.data)
+        console.log(res.data);
         //Get all category
         const sortedcate = Object.values(
           virtualCate.reduce((a, { productCate }) => {
@@ -81,11 +81,15 @@ function Shop(props) {
         const virtualData = [];
         for (let i in res.data) {
           if (!cate) {
-            if (res.data[i].productType.toLowerCase() === type) {
+            if (
+              res.data[i].productType &&
+              res.data[i].productType.toLowerCase() === type
+            ) {
               virtualData.push(res.data[i]);
             }
           } else {
             if (
+              res.data[i].productType &&
               res.data[i].productType.toLowerCase() === type &&
               cate &&
               res.data[i].productGroupCate
@@ -95,6 +99,7 @@ function Shop(props) {
             ) {
               virtualData.push(res.data[i]);
             } else if (
+              res.data[i].productType &&
               res.data[i].productType.toLowerCase() === type &&
               cate &&
               res.data[i].productCate.toLowerCase().split(" ").join("-") ===
@@ -112,7 +117,7 @@ function Shop(props) {
   return (
     <div className="Men">
       <Header />
-      <BannerV2 bannerImage={bg}  />
+      <BannerV2 bannerImage={bg} />
       <ShopMain products={products} sortedCate={sortedCate} />
       <Newsletter />
       <Footer />

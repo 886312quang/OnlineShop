@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { fetchGetNews } from "../../services/news";
 
 function NewsMainWidget(props) {
   const [news, setNews] = useState([]);
@@ -39,7 +40,7 @@ function NewsMainWidget(props) {
   }
 
   useEffect(() => {
-    axios.get(`http://pe.heromc.net:4000/news`).then((res) => {
+    fetchGetNews().then((res) => {
       setNews(res.data);
     });
   }, []);
