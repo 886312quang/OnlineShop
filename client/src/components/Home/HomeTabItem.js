@@ -16,6 +16,16 @@ export default function HomeTabItem(props) {
     }, 1500);
   };
 
+  let width,
+    heightMain,
+    parentHeight,
+    marginLeft,
+    marginRight = "";
+
+  width = "20%"; // five;
+  parentHeight = "21vw";
+  heightMain = `calc(${parentHeight} - 68px)`;
+
   //Limit products
   const limitProducts = products.slice(0, limit);
 
@@ -23,7 +33,16 @@ export default function HomeTabItem(props) {
     <div>
       <div className="BestSeller" style={{ minHeight: `${height}px` }}>
         {limitProducts.map(function (item, index) {
-          return <Product key={index} product={item} index={index} />;
+          return (
+            <Product
+              key={index}
+              product={item}
+              index={index}
+              width={width}
+              height={heightMain}
+              parentHeight={parentHeight}
+            />
+          );
         })}
         {limitProducts.length === 0 && (
           <div

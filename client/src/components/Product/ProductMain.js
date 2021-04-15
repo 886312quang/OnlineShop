@@ -112,7 +112,7 @@ export default function ProductMain(props) {
         </Link>
         <FontAwesomeIcon icon={faAngleRight} className="breadcrumb-arrow" />
         <Link to={slugSex} className="breadcrumb-item breadcrumb-link">
-          {product.productSex === "Woman" ? "Women" : "Men"}
+          {product.productType === "Phone" ? "Phone" : "Laptop"}
         </Link>
         <FontAwesomeIcon icon={faAngleRight} className="breadcrumb-arrow" />
         <div className="breadcrumb-item breadcrumb-product">
